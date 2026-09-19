@@ -1,29 +1,29 @@
-# Evidence Bundle DEMO-001
+# Пакет доказательств DEMO-001
 
-- Outcome ID: `OUT-DEMO-001`
-- Pack version: `1.1.0`
-- Pack commit SHA: `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`
-- Risk: `R2`
-- Evidence owner: Demo QA Owner
-- Status: `complete`
+- Идентификатор результата: `OUT-DEMO-001`
+- Версия Pack: `1.1.0`
+- SHA коммита Pack: `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`
+- Риск: `R2`
+- Владелец доказательств: демонстрационный владелец качества
+- Статус: `complete`
 - Внимание: результаты синтетические и предназначены только для примера.
 
-## Evidence index
+## Реестр доказательств
 
-| Evidence ID | Requirement | Method | Result | Immutable link | Environment | Executed at | Producer | Limitations |
+| ID доказательства | Требование | Метод | Результат | Неизменяемая ссылка | Среда | Время выполнения | Автор | Ограничения |
 |---|---|---|---|---|---|---|---|---|
-| EVD-001 | AC-001 | deterministic clock test | pass | `demo://ci/run-20260919/alert-timing` | simulated controller | 2026-09-19T10:00:00Z | Demo CI | not production hardware |
-| EVD-002 | AC-002 | integration test | pass | `demo://ci/run-20260919/recovery-audit` | test event store | 2026-09-19T10:05:00Z | Demo CI | single protocol |
-| EVD-003 | NFR-001 | 14-day event replay | pass, 1.4% | `demo://report/run-20260919/false-positive` | synthetic site | 2026-09-19T10:10:00Z | Demo Analytics | synthetic traffic |
-| EVD-004 | NFR-002 | load profile | pass, +1.8% | `demo://report/run-20260919/controller-load` | lab controller | 2026-09-19T10:15:00Z | Demo Performance Lab | one controller model |
+| EVD-001 | AC-001 | детерминированная проверка времени | pass | `demo://ci/run-20260919/alert-timing` | симулятор контроллера | 2026-09-19T10:00:00Z | демонстрационный CI | не используется промышленное оборудование |
+| EVD-002 | AC-002 | интеграционный тест | pass | `demo://ci/run-20260919/recovery-audit` | тестовое хранилище событий | 2026-09-19T10:05:00Z | демонстрационный CI | проверен один протокол |
+| EVD-003 | NFR-001 | воспроизведение событий за 14 дней | pass, 1.4% | `demo://report/run-20260919/false-positive` | синтетическая площадка | 2026-09-19T10:10:00Z | демонстрационная аналитика | синтетический трафик |
+| EVD-004 | NFR-002 | профиль нагрузки | pass, +1.8% | `demo://report/run-20260919/controller-load` | лабораторный контроллер | 2026-09-19T10:15:00Z | демонстрационная лаборатория производительности | одна модель контроллера |
 
-## Coverage gaps
+## Пробелы покрытия
 
-Все AC/NFR имеют passing evidence. Production device diversity не проверена и остаётся ограничением перед масштабированием.
+Все AC/NFR имеют успешные доказательства. Разнообразие промышленных устройств не проверено и остаётся ограничением перед масштабированием.
 
-## Independent review
+## Независимая проверка
 
-- Reviewer: Demo QSRE Function Owner
-- Scope: AC-001, AC-002, NFR-001, NFR-002 и ограничения демонстрационного pilot release
-- Decision: accepted for demo pilot only
-- Residual risk: разнообразие production-устройств и протоколов не проверено; реальный production release запрещён
+- Проверяющий: демонстрационный владелец функции QSRE
+- Область проверки: AC-001, AC-002, NFR-001, NFR-002 и ограничения демонстрационного пилотного выпуска
+- Решение: принято только для демонстрационного пилота
+- Остаточный риск: разнообразие промышленных устройств и протоколов не проверено; реальный промышленный выпуск запрещён
