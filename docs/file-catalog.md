@@ -46,6 +46,7 @@
 ## Документация репозитория
 
 - `docs/file-catalog.md` — этот полный перечень и назначение каждого файла.
+- `docs/pde-environment-flow.png` — основная визуальная карта пути Signal → PDE → ASE → QSRE → Outcome Check и локального контура OpenSpace.
 
 ## Архитектура
 

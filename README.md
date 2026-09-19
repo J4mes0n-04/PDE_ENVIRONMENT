@@ -8,20 +8,9 @@
 
 PDE превращает сигнал о проблеме в проверяемое определение продукта. Git хранит нормативные документы, Product Definition Pack, решения и доказательства. Redmine управляет потоком работы. Cursor и Codex используют `AGENTS.md`, rules и skills. OpenSpace находится между агентной средой и библиотекой skills: он помогает находить, оценивать и улучшать skills, но не имеет права автоматически менять нормативные документы.
 
-```text
-Signal -> PDE -> Product Definition Pack -> ASE adapter -> implementation
-   ^                                                   |
-   |                                                   v
-Outcome Check <- PDE feedback <- QSRE adapter <- evidence and release
+![Схема работы PDE-среды от сигнала через Product Definition Pack, ASE и QSRE до Outcome Check, включая локальный контур OpenSpace и skills](docs/pde-environment-flow.png)
 
-Cursor / Codex <-> OpenSpace local MCP <-> .agents/skills
-                         |
-                         v
-                 quality records and proposals
-                         |
-                         v
-                 Pull Request + human approval
-```
+Схема читается сверху вниз: основной цикл показывает путь продуктового определения и обратную связь после выпуска; нижний контур показывает, как Cursor/Codex используют локальный OpenSpace и библиотеку skills. OpenSpace может формировать quality records и предложения, но изменение skills проходит через Pull Request и одобрение человека.
 
 ASE и QSRE пока не развёрнуты как отдельные среды. Репозиторий содержит явные контракты и адаптеры, чтобы подключить их позже без изменения базовой модели PDE.
 
