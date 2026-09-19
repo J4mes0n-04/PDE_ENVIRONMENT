@@ -17,6 +17,7 @@
 
 - `.codex/config.toml` — проектная конфигурация Codex; OpenSpace MCP подготовлен, выключен и ограничен локальным режимом.
 - `.cursor/rules/00-pde-core.mdc` — всегда применяемые границы PDE.
+- `.cursor/rules/05-outcome-intake.mdc` — обязательные уточняющие вопросы по входным документам и размещение каждого Outcome в отдельном каталоге проекта.
 - `.cursor/rules/10-pack-work.mdc` — правила изменения `pack.md` и `pack.json`.
 - `.cursor/rules/20-evidence.mdc` — правила качества Evidence Bundle.
 - `.cursor/rules/30-governance-change.mdc` — change control нормативных документов.
