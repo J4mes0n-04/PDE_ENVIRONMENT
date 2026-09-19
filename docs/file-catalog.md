@@ -48,6 +48,7 @@
 - `docs/file-catalog.md` — этот полный перечень и назначение каждого файла.
 - `docs/pde-environment-flow.png` — основная визуальная карта пути Signal → PDE → ASE → QSRE → Outcome Check и локального контура OpenSpace.
 - `docs/pde-web-interface-mockup.png` — концептуальный макет web-интерфейса первичной настройки, подключений и проверки среды PDE.
+- `docs/pde-ase-qsre-handoff-flow.png` — слайд со схемой передачи работы и обратной связи между PDE, ASE и QSRE.
 
 ## Архитектура
 
