@@ -3,7 +3,7 @@
 ## Source of truth
 
 - Read `governance/` before changing rules, templates, skills, CI, or integration behavior.
-- Treat `workspaces/projects/` as operational work and `workspaces/examples/` as non-production examples.
+- Treat `workspaces/projects/` as the only location for operational project files. Treat `workspaces/examples/` as non-production examples. Project work in `workspaces/` MUST NOT change platform files outside `workspaces/`.
 - Do not copy a full Product Definition Pack into Redmine; store a link to a Git commit instead.
 
 ## Required traceability
@@ -14,6 +14,11 @@
 
 ## Change boundaries
 
+- Platform files MUST NOT be created or modified while working in `workspaces/`.
+- Create and generate project files only inside `workspaces/projects/<project-id>/`.
+- Do not write operational work to `workspaces/` root or `workspaces/examples/`.
+- `governance/`, `architecture/`, `templates/`, `schemas/`, `scripts/`, `integrations/`, `.agents/`, `.cursor/`, `.codex/` and CI are platform. A project in `workspaces/` MUST NOT change them.
+- Platform artifacts MAY and SHOULD constrain `workspaces/`: copy templates into an Outcome folder, validate Pack/Evidence, apply skills and rules. Do not mix a platform change into the same edit as project generation.
 - Do not expand scope or alter an Outcome without a Definition Change record.
 - Do not edit governance automatically from OpenSpace results. Create a proposal or Pull Request for human approval.
 - Do not enable optional integrations or cloud data transfer without an explicit decision recorded in Git.

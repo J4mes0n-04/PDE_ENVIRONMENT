@@ -4,6 +4,8 @@
 
 Документы написаны на русском языке. Имена файлов, каталогов, полей и технические идентификаторы — на английском, чтобы структура одинаково хорошо читалась человеком и обрабатывалась инструментами.
 
+> **Статус среды:** `0.1.0-draft`. Репозиторий готовится к первому контролируемому пилоту, но ещё не является утверждённым production-контуром. CODEOWNERS, Redmine, владельцы ролей и нормативные документы необходимо настроить и утвердить перед рабочим запуском.
+
 ## Основной принцип
 
 PDE превращает сигнал о проблеме в проверяемое определение продукта. Git хранит нормативные документы, Product Definition Pack, решения и доказательства. Redmine управляет потоком работы. Cursor и Codex используют `AGENTS.md`, rules и skills. OpenSpace находится между агентной средой и библиотекой skills: он помогает находить, оценивать и улучшать skills, но не имеет права автоматически менять нормативные документы.
@@ -16,16 +18,33 @@ ASE и QSRE пока не развёрнуты как отдельные сре�
 
 ## Быстрый старт
 
-1. Прочитайте [PDE charter](governance/01-pde-charter.md), [глоссарий](governance/02-glossary.md) и [жизненный цикл](governance/09-lifecycle-and-gates.md).
-2. Выполните `pwsh ./scripts/doctor.ps1`.
-3. Настройте роли и владельцев в `governance/document-control.yaml` и `.github/CODEOWNERS`.
-4. Создайте рабочий проект только внутри `workspaces/projects/` по инструкции из [workspaces/README.md](workspaces/README.md).
-5. Создайте `pack.md` и `pack.json` из шаблонов. Выполните `pwsh ./scripts/validate-pack.ps1`.
-6. Создайте Outcome в Redmine и свяжите его с конкретным commit SHA Pack.
-7. После готовности Pack проведите Ready Review и сформируйте ASE handoff.
-8. Перед выпуском соберите Evidence Bundle, получите QSRE feedback и выполните Outcome Check.
+### Предварительные требования
 
-Демонстрационный Outcome находится отдельно в `workspaces/examples/` и не является действующей работой.
+- Git;
+- PowerShell 7 или новее с командой `pwsh`;
+- GitHub-аккаунт и права на создание или настройку репозитория;
+- Redmine для рабочего процесса либо решение использовать репозиторий только для локального ознакомления до её подключения.
+
+Склонируйте репозиторий и перейдите в его корень:
+
+```powershell
+git clone https://github.com/J4mes0n-04/PDE_ENVIRONMENT.git
+Set-Location PDE_ENVIRONMENT
+```
+
+Все команды ниже выполняются из корня репозитория.
+
+1. Прочитайте [PDE charter](governance/01-pde-charter.md), [глоссарий](governance/02-glossary.md) и [жизненный цикл](governance/09-lifecycle-and-gates.md).
+2. Выполните `pwsh ./scripts/doctor.ps1` и `pwsh ./scripts/validate-repository.ps1`.
+3. Назначьте роли в `governance/document-control.yaml`. Одновременно обновите совпадающие `Owner`, `Approver`, `Status`, `Version` и `Review cycle` в заголовках соответствующих нормативных документов — validator требует их синхронности.
+4. Настройте `.github/CODEOWNERS`, branch protection и Redmine по инструкции ниже.
+5. Создайте рабочий проект только внутри `workspaces/projects/` по инструкции из [workspaces/README.md](workspaces/README.md).
+6. Выберите Mini Pack для R0–R1 либо Full Pack для R2–R3, затем создайте согласованные `pack.md` и `pack.json` из шаблонов. Выполните `pwsh ./scripts/validate-pack.ps1`.
+7. После активации Redmine создайте Outcome и свяжите его с конкретным commit SHA Pack. Полный Pack в Redmine не копируется.
+8. После готовности Pack проведите Ready Review и сформируйте ASE handoff.
+9. Перед выпуском соберите Evidence Bundle, выполните `pwsh ./scripts/validate-evidence.ps1`, получите QSRE feedback и проведите Outcome Check.
+
+> Обратите внимание: репозиторий включает демонстрационный Outcome в `workspaces/examples/`, однако этот пример не используется для непосредственной работы над реальными продуктами. Все реальные Outcome и рабочие файлы можно размещать только в каталоге `workspaces/projects/` по правилам PDE.
 
 ## Режимы среды
 
@@ -37,7 +56,7 @@ ASE и QSRE пока не развёрнуты как отдельные сре�
 - `observability` — добавляются OpenTelemetry и Grafana.
 - `future-engineering` — подключаются отдельные ASE и QSRE среды через стабильные handoff-контракты.
 
-Включение флага не устанавливает инструмент автоматически. Оно означает, что конфигурация инструмента проверена, владелец назначен и команда решила использовать интеграцию.
+Включение feature flag не устанавливает инструмент автоматически. Значение `enabled: true` фиксирует решение использовать компонент в целевой конфигурации, но само по себе не доказывает его готовность. Интеграция считается рабочей только после удаления placeholders, назначения владельца, проверки подключения и успешного прохождения соответствующих validators. Для ещё не настроенного внешнего инструмента следует сохранять `enabled: false`.
 
 ## Структура репозитория
 
@@ -45,8 +64,8 @@ ASE и QSRE пока не развёрнуты как отдельные сре�
 - `architecture/` — описание устройства среды, границ и потоков данных.
 - `operations/` — инструкции запуска, сопровождения и проверки готовности среды.
 - `templates/` — шаблоны рабочих артефактов.
-- `schemas/` — машиночитаемые схемы. Первая версия содержит облегчённую JSON Schema Pack.
-- `workspaces/` — единственное место для проектов, Outcome и Evidence конкретной работы.
+- `schemas/` — машиночитаемые схемы. Текущая строгая JSON Schema Pack v2 разделяет `outcome_state` и `pack_status`, запрещает неизвестные поля и проверяет условия риска, Ready, release, Evidence Bundle, telemetry, test plan и threat analysis.
+- `workspaces/` — единственное место для проектов, Outcome и Evidence конкретной работы. Платформа влияет на `workspaces/`; работа в `workspaces/` не изменяет платформу. Реальные проекты только в `workspaces/projects/`.
 - `integrations/` — отключаемые адаптеры GitHub, Redmine, OpenSpace, ASE, QSRE, Unleash и observability.
 - `.agents/skills/` — пять начальных skills PDE.
 - `.cursor/rules/` — короткие правила, автоматически применяемые Cursor.
@@ -73,9 +92,66 @@ ASE и QSRE пока не развёрнуты как отдельные сре�
 - определить Redmine URL, project key и custom fields;
 - назначить PDE Lead, Delivery Lead, Outcome Owner и временных владельцев ASE/QSRE функций;
 - утвердить документы со статусом `Draft`;
-- выбрать пилот уровня R1 или R2;
+- выбрать R1 как рекомендуемый первый пилот; R2 допускается только в ограниченном test/non-production контуре после назначения владельцев риска и независимого review;
 - проверить branch protection и четыре workflow;
 - решить, нужен ли OpenSpace в shadow mode для пилота.
+
+## Активация обязательного review в GitHub и трассировки Redmine
+
+После скачивания или создания нового репозитория временные значения нужно заменить реальными. Пока в конфигурации остаются `@your-org/...`, `TBD` или `redmine.example.invalid`, CODEOWNERS и интеграция Redmine считаются подготовленными, но не работающими.
+
+### 1. Настроить CODEOWNERS
+
+1. Определите, кто будет проверять изменения. Для личного репозитория достаточно GitHub username, например `@username`. Для организации создайте или выберите GitHub Teams, например `@organization/pde-governance`.
+2. Замените все значения `@your-org/...` в [`.github/CODEOWNERS`](.github/CODEOWNERS) на существующих пользователей или команды. Указанные владельцы должны иметь доступ на запись в репозиторий.
+3. В GitHub откройте `Settings → Rules → Rulesets` или настройки branch protection для `main` и включите:
+   - обязательный Pull Request перед merge;
+   - обязательное одобрение Code Owners;
+   - обязательное прохождение GitHub Actions checks;
+   - запрет прямого push в `main`, если он поддерживается выбранным типом репозитория.
+4. Создайте тестовый Pull Request с изменением в `governance/` и убедитесь, что GitHub автоматически назначил указанного владельца и не разрешает merge без его одобрения.
+
+Пример для одного владельца:
+
+```text
+* @username
+/governance/ @username
+/.github/ @username
+/.agents/skills/ @username
+/integrations/openspace/ @username
+/workspaces/projects/ @username
+```
+
+### 2. Настроить Redmine
+
+1. Создайте или выберите проект Redmine. Найдите его технический identifier: обычно это последняя часть адреса `/projects/<project-key>`.
+2. В [`integrations/redmine/field-mapping.yaml`](integrations/redmine/field-mapping.yaml) замените:
+   - `project_key: TBD` на технический identifier проекта;
+   - `base_url: https://redmine.example.invalid` на адрес вашей Redmine без пути проекта.
+3. Создайте или сопоставьте в Redmine trackers `Outcome`, `Delivery Slice`, `Definition Change`, `Risk or Blocker` и `Service`.
+4. Создайте или сопоставьте custom fields, перечисленные в секции `custom_fields`: Outcome ID, Pack URL, Pack Version, Pack Commit SHA, Pack Status, Risk Level, Autonomy Level, Outcome Scope, Outcome Owner, Baseline, Target, Validation Window и Next Gate.
+5. Настройте состояния и переходы workflow по секции `states`. Права переходов должны соответствовать ролям и gates из `governance/09-lifecycle-and-gates.md` и `governance/18-redmine-workflow.md`.
+6. Создайте тестовый Outcome в Redmine, добавьте ссылку на конкретный commit SHA Pack и проверьте обратную ссылку из Pack на Redmine issue.
+
+Пример минимальной конфигурации:
+
+```yaml
+project_key: smart-home
+base_url: https://redmine.company.example
+```
+
+Не сохраняйте Redmine API token, GitHub token или другие credentials в репозитории. Если автоматическая синхронизация будет добавлена позже, передавайте секреты только через GitHub Actions Secrets или утверждённое локальное хранилище секретов.
+
+### 3. Проверить готовность
+
+Перед первым рабочим Outcome убедитесь, что:
+
+- в `CODEOWNERS` не осталось `@your-org`;
+- в `field-mapping.yaml` не осталось `TBD` и `redmine.example.invalid`;
+- тестовый PR требует review Code Owner;
+- GitHub Actions checks обязательны для merge;
+- тестовая карточка Redmine содержит Pack URL и Pack Commit SHA;
+- команда не копирует полный Pack в Redmine, а хранит там только ссылку на версию в Git.
 
 ## Важные ограничения
 
@@ -85,7 +161,10 @@ ASE и QSRE пока не развёрнуты как отдельные сре�
 - Нельзя включать облачный обмен OpenSpace без отдельного изменения политики.
 - Нельзя считать ASE или QSRE подключёнными только потому, что существуют каталоги адаптеров.
 - Будущие требования ИБ, персональных данных и аудита регистрируются в `governance/20-compliance-obligations-register.md` до превращения в обязательные controls.
+- Нельзя запускать R3 Outcome до заполнения compliance register, утверждения security controls, независимой проверки и подтверждённого rollback.
 
 ## Версия
 
-Начальная версия пакета: `0.1.0-draft`. Лицензия намеренно не добавлена.
+Начальная версия пакета: `0.1.0-draft`.
+
+Лицензия намеренно не добавлена. До выбора и добавления файла `LICENSE` условия использования, изменения и распространения репозитория третьими лицами не определены; перед публичным повторным использованием необходимо отдельно согласовать лицензионные условия.

@@ -23,6 +23,8 @@ OpenSpace находится между Cursor/Codex и библиотекой `
 9. Перезапустить Codex и убедиться через `/mcp`, что server доступен.
 10. Запустить shadow pilot: search и quality records без автоматического изменения skills.
 
+Repository validator требует совпадения этих двух флагов: состояние `false/false` означает подготовленную, но выключенную интеграцию; `true/true` — явно активированную локальную интеграцию. Смешанное состояние блокирует CI. `OPENSPACE_CLOUD_MODE`, cloud telemetry и автоматические evolution triggers остаются выключенными в обоих режимах.
+
 ## Запрещено
 
 - включать `OPENSPACE_CLOUD_MODE=live`;

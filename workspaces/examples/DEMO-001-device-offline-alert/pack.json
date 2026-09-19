@@ -1,8 +1,9 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "outcome_id": "OUT-DEMO-001",
   "title": "Device offline alert for building operators",
-  "status": "done",
+  "outcome_state": "done",
+  "pack_status": "baseline",
   "pack_type": "full",
   "version": "1.1.0",
   "risk_level": "R2",
@@ -13,31 +14,63 @@
     "risk_owner": "Demo Operations Owner"
   },
   "problem": {
-    "summary": "Building operators detect controller connectivity loss too late for timely response.",
+    "summary": "Операторы демонстрационного бизнес-центра замечают потерю связи с контроллерами в среднем через 14 минут после факта.",
     "evidence_links": ["demo://support-dataset/30-days"]
   },
   "outcome": {
-    "statement": "Reduce p95 device-offline detection time to no more than 120 seconds."
+    "statement": "Сократить p95 времени обнаружения потери связи до 120 секунд."
   },
   "scope": {
-    "in": ["Heartbeat monitoring", "Offline alert", "Recovery audit entry"],
-    "out": ["Automatic physical control", "Resident notifications", "Firmware changes"]
+    "in": ["heartbeat monitoring", "offline alert", "восстановление статуса", "audit entry"],
+    "out": ["автоматическое управление оборудованием", "уведомления конечным жильцам", "изменение firmware"]
   },
   "acceptance_criteria": [
-    {"id": "AC-001", "statement": "Create an offline alert within 90 seconds after the allowed heartbeat window."},
-    {"id": "AC-002", "statement": "Close the alert after reconnection and retain offline and online timestamps."}
+    {"id": "AC-001", "statement": "система создаёт offline alert не позднее 90 секунд после пропуска допустимого heartbeat window"},
+    {"id": "AC-002", "statement": "после восстановления связи alert закрывается, а время offline/online сохраняется в audit log"}
   ],
   "nfrs": [
-    {"id": "NFR-001", "statement": "False-positive rate remains below 2 percent during the 14-day pilot."},
-    {"id": "NFR-002", "statement": "Average controller load increase remains at or below 3 percent."}
+    {"id": "NFR-001", "statement": "false-positive rate на пилотной площадке ниже 2% за 14 дней"},
+    {"id": "NFR-002", "statement": "обработка heartbeat не увеличивает среднюю загрузку контроллера более чем на 3%"}
   ],
+  "open_questions": [],
   "measurement": {
-    "metric": "p95 offline detection time in seconds",
-    "baseline": "840 seconds over the synthetic 30-day support dataset",
-    "target": "120 seconds or less",
-    "source": "demo heartbeat and alert event store",
-    "validation_window": "14 days on one test site",
-    "decision_rule": "keep if p95 is at most 120 seconds and false positives are below 2 percent"
+    "metric": "p95 времени обнаружения потери связи",
+    "baseline": "14 минут",
+    "target": "120 секунд",
+    "source": "синтетическая выборка support tickets за 30 дней",
+    "validation_window": "14 дней пилота на одной тестовой площадке",
+    "decision_rule": "p95 не выше 120 секунд и false-positive rate ниже 2%"
+  },
+  "telemetry": {
+    "signals": [
+      {
+        "name": "p95 времени обнаружения потери связи",
+        "source": "demo heartbeat and alert event store",
+        "decision_use": "подтверждает достижение target 120 секунд"
+      },
+      {
+        "name": "false-positive rate",
+        "source": "demo alert event store",
+        "decision_use": "останавливает rollout при достижении 5%"
+      }
+    ],
+    "observation_window": "14 дней пилота на одной тестовой площадке"
+  },
+  "test_plan": {
+    "strategy": "детерминированные, интеграционные, replay и нагрузочные проверки всех AC/NFR",
+    "environments": ["simulated controller", "test event store", "synthetic site", "lab controller"],
+    "requirement_coverage": ["AC-001", "AC-002", "NFR-001", "NFR-002"]
+  },
+  "release": {
+    "rollout": ["Пилот на одной тестовой площадке"],
+    "stop_conditions": ["false-positive rate >= 5% за 24 часа"],
+    "rollback": ["выключить обработчик alerts"]
+  },
+  "evidence_bundle": {
+    "path": "evidence.md",
+    "pack_version": "1.1.0",
+    "pack_commit_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "status": "complete"
   },
   "redmine": {
     "issue_id": "RM-DEMO-101",

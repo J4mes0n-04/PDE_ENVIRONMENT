@@ -51,7 +51,7 @@
 ## Архитектура
 
 - `architecture/system-context.md` — границы PDE и внешних систем.
-- `architecture/repository-layout.md` — разделение платформы и рабочих проектов.
+- `architecture/repository-layout.md` — разделение платформы и рабочих проектов; односторонняя граница: платформа влияет на `workspaces/`, работа в `workspaces/` не изменяет платформу.
 - `architecture/pde-ase-qsre-flow.md` — прямой и обратный поток PDE–ASE–QSRE.
 - `architecture/toolchain-and-feature-flags.md` — роли инструментов и правила их включения.
 
@@ -129,7 +129,7 @@
 
 ## Рабочие пространства
 
-- `workspaces/README.md` — правило хранения конкретной работы.
+- `workspaces/README.md` — правило хранения конкретной работы и односторонняя граница: платформа влияет на `workspaces/`, работа в `workspaces/` не изменяет платформу.
 - `workspaces/projects/README.md` — место реальных проектов и Outcomes.
 - `workspaces/examples/README.md` — предупреждение о демонстрационных данных.
 - `workspaces/examples/DEMO-001-device-offline-alert/README.md` — описание учебного R2 Outcome.

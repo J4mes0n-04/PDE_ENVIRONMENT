@@ -7,12 +7,14 @@
 - Outcome ID: `OUT-000`
 - Pack type: `mini`
 - Version: `0.1.0`
-- Status: `draft`
+- Outcome state: `new`
+- Pack status: `draft`
 - Risk: `R1`
 - Autonomy: `A2`
-- Redmine: `<immutable-or-stable-link>`
+- Redmine: `RM-000` — https://redmine.example.invalid/issues/000
 - Outcome Owner: `<role-or-name>`
 - PDE Owner: `<role-or-name>`
+- Risk Owner: `<role-or-name>`
 
 ## Problem
 

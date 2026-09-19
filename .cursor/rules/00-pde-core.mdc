@@ -6,7 +6,11 @@ alwaysApply: true
 # PDE core
 
 - Read `AGENTS.md` and applicable governance before editing.
-- Keep platform files outside `workspaces/`; keep project work inside `workspaces/projects/`.
+- One-way boundary: platform governs `workspaces/`; `workspaces/` MUST NOT change the platform.
+- Keep platform files outside `workspaces/`. Create and generate project files only in `workspaces/projects/<project-id>/`.
+- While working on a project in `workspaces/`, do not create, edit, move, or delete files in `governance/`, `architecture/`, `operations/`, `templates/`, `schemas/`, `scripts/`, `integrations/`, `.agents/`, `.cursor/`, `.codex/`, `.github/` or repository root.
+- Do not place real work in `workspaces/` root or `workspaces/examples/`.
+- Platform templates, schemas, skills, rules and scripts MAY and SHOULD be used to create and check files inside `workspaces/projects/`. Copy templates into the Outcome folder; do not edit the template source as part of project work.
 - Preserve Signal -> Outcome -> Pack -> Slice/PR -> Evidence -> Release -> Outcome Check traceability.
 - Write human explanations in Russian and stable technical identifiers in English.
 - Do not change scope, risk, or baseline without Definition Change.

@@ -3,11 +3,15 @@
 ## Control
 
 - Outcome ID: `OUT-000`
+- Pack type: `full`
 - Version: `0.1.0`
-- Status: `draft`
+- Outcome state: `new`
+- Pack status: `draft`
 - Risk / autonomy: `R2 / A2`
-- Redmine URL:
-- Outcome Owner / PDE Owner / Risk Owner:
+- Redmine: `RM-000` — https://redmine.example.invalid/issues/000
+- Outcome Owner: `<role-or-name>`
+- PDE Owner: `<role-or-name>`
+- Risk Owner: `<role-or-name>`
 - Pack commit SHA:
 
 ## Signal and problem evidence
@@ -57,6 +61,18 @@ Baseline, target, единица, сегмент, источник, validation w
 ## Evidence plan
 
 Карта AC/NFR к методам и ожидаемым artifacts.
+
+## Telemetry plan
+
+Сигналы, источники, observation window и использование каждого сигнала при принятии решения по Outcome.
+
+## Test plan
+
+Стратегия проверки, среды выполнения и полное покрытие идентификаторов AC/NFR.
+
+## Threat analysis
+
+Для R3: угрозы, меры снижения, остаточный риск и утвердивший владелец.
 
 ## Release rollout rollback
 

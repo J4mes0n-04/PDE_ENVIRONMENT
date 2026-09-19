@@ -9,9 +9,13 @@
 
 Что изменено и почему это находится в scope.
 
-Reason: N/A for non-governance changes
+Для governance-impacting изменения укажите конкретную причину и ожидаемый результат минимум одним содержательным предложением.
 
-Governance impact: none
+Reason:
+
+Перечислите затронутые нормы, templates, schemas, rules, skills, integrations или CI и объясните влияние на действующий процесс.
+
+Governance impact:
 
 ## Evidence
 

@@ -22,6 +22,16 @@ PROD/
 `-- .github/          GitHub workflow и шаблоны
 ```
 
+## Односторонняя граница
+
+Платформа направляет работу. Работа не изменяет платформу.
+
+- `governance/`, `architecture/`, `operations/`, `templates/`, `schemas/`, `scripts/`, `integrations/`, `.agents/`, `.cursor/`, `.codex/` и `.github/` задают нормы, шаблоны, проверки и автоматизацию для `workspaces/`.
+- Эти каталоги могут и должны влиять на `workspaces/`: шаблон копируется в Outcome, schema и scripts проверяют Pack и Evidence, skills и rules задают способ заполнения.
+- Создание, генерация и изменение проекта в `workspaces/` или `workspaces/projects/` не имеют права создавать или менять файлы вне `workspaces/`.
+- Реальная работа размещается только в `workspaces/projects/<project-id>/`. Корень `workspaces/` и `workspaces/examples/` для этого не используются.
+- Если при работе над проектом обнаружен пробел в правилах среды, оформляется отдельное изменение платформы. Оно не смешивается с генерацией проектных файлов.
+
 ## Правило зависимостей
 
 Нормы направляют templates, rules, skills и CI. Исполняемые файлы могут ссылаться на governance, но governance не должен зависеть от поведения конкретного инструмента. Это позволяет отключить Cursor, Codex, OpenSpace, Unleash или observability без потери определения процесса.

@@ -5,9 +5,10 @@
 - Outcome ID: `OUT-DEMO-001`
 - Pack type: `full`
 - Version: `1.1.0`
-- Status: `done`
+- Outcome state: `done`
+- Pack status: `baseline`
 - Risk / autonomy: `R2 / A2`
-- Redmine: `RM-DEMO-101`
+- Redmine: [`RM-DEMO-101`](https://redmine.example.invalid/issues/101)
 - Outcome Owner: Demo Product Owner
 - PDE Owner: Demo PDE
 - Risk Owner: Demo Operations Owner
@@ -35,6 +36,22 @@ Out of scope: автоматическое управление оборудов
 - `NFR-001`: false-positive rate на пилотной площадке ниже 2% за 14 дней.
 - `NFR-002`: обработка heartbeat не увеличивает среднюю загрузку контроллера более чем на 3%.
 
+## Open questions
+
+Открытых блокирующих и неблокирующих вопросов нет.
+
+## Telemetry plan
+
+- Сигнал `p95 времени обнаружения потери связи` из `demo heartbeat and alert event store` подтверждает достижение target 120 секунд.
+- Сигнал `false-positive rate` из `demo alert event store` останавливает rollout при достижении 5%.
+- Observation window: 14 дней пилота на одной тестовой площадке.
+
+## Test plan
+
+Стратегия: детерминированные, интеграционные, replay и нагрузочные проверки всех AC/NFR.
+Среды: simulated controller, test event store, synthetic site, lab controller.
+Покрытие: AC-001, AC-002, NFR-001, NFR-002.
+
 ## Risks
 
 R2: ложные alerts влияют на операторов и могут скрыть реальные инциденты. Автоматическое воздействие на физические системы отсутствует.
@@ -48,6 +65,10 @@ R2: ложные alerts влияют на операторов и могут с�
 ## Release rollout rollback
 
 Пилот на одной тестовой площадке. Stop condition: false-positive rate >= 5% за 24 часа. Rollback: выключить обработчик alerts, сохранив сырые heartbeat events.
+
+## Evidence Bundle
+
+`evidence.md`, Pack version `1.1.0`, Pack commit SHA `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`, status `complete`.
 
 ## Change history
 

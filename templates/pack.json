@@ -1,8 +1,9 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "outcome_id": "OUT-000",
   "title": "Short human-readable title",
-  "status": "draft",
+  "outcome_state": "new",
+  "pack_status": "draft",
   "pack_type": "mini",
   "version": "0.1.0",
   "risk_level": "R1",
@@ -29,6 +30,7 @@
   "nfrs": [
     {"id": "NFR-001", "statement": "Verifiable quality constraint"}
   ],
+  "open_questions": [],
   "measurement": {
     "metric": "Metric name and unit",
     "baseline": "Baseline with period",
@@ -36,6 +38,22 @@
     "source": "System of record",
     "validation_window": "Time window",
     "decision_rule": "scale | keep | adapt | revert rule"
+  },
+  "telemetry": {
+    "signals": [
+      {"name": "Outcome signal", "source": "System of record", "decision_use": "Supports the Outcome decision rule"}
+    ],
+    "observation_window": "Defined observation period"
+  },
+  "test_plan": {
+    "strategy": "Verify every AC and NFR with reproducible evidence",
+    "environments": ["test"],
+    "requirement_coverage": ["AC-001", "NFR-001"]
+  },
+  "release": {
+    "rollout": ["Controlled rollout step"],
+    "stop_conditions": ["Measurable stop condition"],
+    "rollback": ["Verified rollback action"]
   },
   "redmine": {
     "issue_id": "RM-000",

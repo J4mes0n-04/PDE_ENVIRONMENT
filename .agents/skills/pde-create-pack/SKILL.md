@@ -22,4 +22,4 @@ description: Создаёт или существенно обновляет Pro
 
 ## Output
 
-Черновик Pack с явными unknowns. Не переводите status в `ready` без Ready Review и решения владельцев.
+Черновик Pack с явными unknowns. До Ready Review используйте `pack_status: draft` или `in-review`; не переводите `outcome_state` в `ready` и `pack_status` в `baseline` без решения владельцев.

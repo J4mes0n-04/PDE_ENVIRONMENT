@@ -1,18 +1,19 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://pde.local/schemas/pack.schema.json",
-  "title": "PDE Product Definition Pack control record",
+  "title": "PDE Product Definition Pack control record v2",
   "type": "object",
   "required": [
-    "schema_version", "outcome_id", "title", "status", "pack_type", "version",
+    "schema_version", "outcome_id", "title", "outcome_state", "pack_status", "pack_type", "version",
     "risk_level", "autonomy_level", "owners", "problem", "outcome", "scope",
-    "acceptance_criteria", "nfrs", "measurement", "redmine"
+    "acceptance_criteria", "nfrs", "measurement", "open_questions", "release", "redmine"
   ],
   "properties": {
-    "schema_version": {"const": 1},
+    "schema_version": {"const": 2},
     "outcome_id": {"type": "string", "pattern": "^OUT-[A-Z0-9-]+$"},
     "title": {"type": "string", "minLength": 5},
-    "status": {"enum": ["draft", "defined", "ready", "committed", "in-progress", "in-review", "released", "outcome-check", "done", "blocked", "adapt", "reverted", "closed"]},
+    "outcome_state": {"enum": ["new", "defined", "ready", "committed", "in-progress", "in-review", "released", "outcome-check", "done", "blocked", "adapt", "reverted", "closed"]},
+    "pack_status": {"enum": ["draft", "in-review", "baseline", "superseded", "archived"]},
     "pack_type": {"enum": ["mini", "full"]},
     "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
     "risk_level": {"enum": ["R0", "R1", "R2", "R3"]},
@@ -24,20 +25,23 @@
         "outcome_owner": {"type": "string", "minLength": 2},
         "pde_owner": {"type": "string", "minLength": 2},
         "risk_owner": {"type": "string", "minLength": 2}
-      }
+      },
+      "additionalProperties": false
     },
     "problem": {
       "type": "object",
       "required": ["summary", "evidence_links"],
       "properties": {
         "summary": {"type": "string", "minLength": 20},
-        "evidence_links": {"type": "array", "minItems": 1, "items": {"type": "string"}}
-      }
+        "evidence_links": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 5}}
+      },
+      "additionalProperties": false
     },
     "outcome": {
       "type": "object",
       "required": ["statement"],
-      "properties": {"statement": {"type": "string", "minLength": 20}}
+      "properties": {"statement": {"type": "string", "minLength": 20}},
+      "additionalProperties": false
     },
     "scope": {
       "type": "object",
@@ -45,7 +49,8 @@
       "properties": {
         "in": {"type": "array", "minItems": 1, "items": {"type": "string"}},
         "out": {"type": "array", "minItems": 1, "items": {"type": "string"}}
-      }
+      },
+      "additionalProperties": false
     },
     "acceptance_criteria": {"$ref": "#/definitions/requirements"},
     "nfrs": {"$ref": "#/definitions/requirements"},
@@ -59,7 +64,94 @@
         "source": {"type": "string", "minLength": 3},
         "validation_window": {"type": "string", "minLength": 3},
         "decision_rule": {"type": "string", "minLength": 10}
+      },
+      "additionalProperties": false
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "question", "blocking", "owner", "status"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^Q-[0-9]{3,}$"},
+          "question": {"type": "string", "minLength": 10},
+          "blocking": {"type": "boolean"},
+          "owner": {"type": "string", "minLength": 2},
+          "due_date": {"type": "string", "format": "date"},
+          "status": {"enum": ["open", "resolved", "accepted-risk"]}
+        },
+        "additionalProperties": false
       }
+    },
+    "telemetry": {
+      "type": "object",
+      "required": ["signals", "observation_window"],
+      "properties": {
+        "signals": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["name", "source", "decision_use"],
+            "properties": {
+              "name": {"type": "string", "minLength": 3},
+              "source": {"type": "string", "minLength": 3},
+              "decision_use": {"type": "string", "minLength": 10}
+            },
+            "additionalProperties": false
+          }
+        },
+        "observation_window": {"type": "string", "minLength": 3}
+      },
+      "additionalProperties": false
+    },
+    "test_plan": {
+      "type": "object",
+      "required": ["strategy", "environments", "requirement_coverage"],
+      "properties": {
+        "strategy": {"type": "string", "minLength": 10},
+        "environments": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 2}},
+        "requirement_coverage": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^(AC|NFR)-[0-9]{3,}$"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "threat_analysis": {
+      "type": "object",
+      "required": ["summary", "threats", "mitigations", "residual_risk", "approved_by"],
+      "properties": {
+        "summary": {"type": "string", "minLength": 20},
+        "threats": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 5}},
+        "mitigations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 5}},
+        "residual_risk": {"type": "string", "minLength": 10},
+        "approved_by": {"type": "string", "minLength": 2}
+      },
+      "additionalProperties": false
+    },
+    "release": {
+      "type": "object",
+      "required": ["rollout", "stop_conditions", "rollback"],
+      "properties": {
+        "rollout": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 5}},
+        "stop_conditions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 5}},
+        "rollback": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 5}}
+      },
+      "additionalProperties": false
+    },
+    "evidence_bundle": {
+      "type": "object",
+      "required": ["path", "pack_version", "pack_commit_sha", "status"],
+      "properties": {
+        "path": {"type": "string", "minLength": 3},
+        "pack_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "pack_commit_sha": {"type": "string", "pattern": "^[0-9a-fA-F]{40}$"},
+        "status": {"enum": ["complete", "accepted"]}
+      },
+      "additionalProperties": false
     },
     "redmine": {
       "type": "object",
@@ -67,7 +159,8 @@
       "properties": {
         "issue_id": {"type": "string", "minLength": 3},
         "url": {"type": "string", "minLength": 8}
-      }
+      },
+      "additionalProperties": false
     }
   },
   "definitions": {
@@ -80,9 +173,60 @@
         "properties": {
           "id": {"type": "string", "pattern": "^(AC|NFR)-[0-9]{3,}$"},
           "statement": {"type": "string", "minLength": 10}
-        }
+        },
+        "additionalProperties": false
       }
     }
   },
-  "additionalProperties": true
+  "allOf": [
+    {
+      "if": {"properties": {"risk_level": {"enum": ["R2", "R3"]}}, "required": ["risk_level"]},
+      "then": {"properties": {"pack_type": {"const": "full"}}}
+    },
+    {
+      "if": {"properties": {"pack_type": {"const": "full"}}, "required": ["pack_type"]},
+      "then": {"required": ["telemetry", "test_plan"]}
+    },
+    {
+      "if": {"properties": {"risk_level": {"const": "R3"}}, "required": ["risk_level"]},
+      "then": {"required": ["threat_analysis"], "properties": {"release": {"required": ["rollback"]}}}
+    },
+    {
+      "if": {"properties": {"outcome_state": {"enum": ["ready", "committed", "in-progress", "in-review", "released", "outcome-check", "done"]}}, "required": ["outcome_state"]},
+      "then": {
+        "properties": {
+          "open_questions": {
+            "not": {
+              "contains": {
+                "type": "object",
+                "required": ["blocking", "status"],
+                "properties": {"blocking": {"const": true}, "status": {"const": "open"}}
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"outcome_state": {"enum": ["released", "outcome-check", "done"]}}, "required": ["outcome_state"]},
+      "then": {"required": ["evidence_bundle"]}
+    },
+    {
+      "if": {"properties": {"outcome_state": {"enum": ["ready", "committed", "in-progress", "in-review", "released", "outcome-check", "done"]}}, "required": ["outcome_state"]},
+      "then": {"properties": {"pack_status": {"const": "baseline"}}}
+    },
+    {
+      "if": {"properties": {"outcome_state": {"const": "new"}}, "required": ["outcome_state"]},
+      "then": {"properties": {"pack_status": {"const": "draft"}}}
+    },
+    {
+      "if": {"properties": {"outcome_state": {"enum": ["defined", "adapt"]}}, "required": ["outcome_state"]},
+      "then": {"properties": {"pack_status": {"enum": ["draft", "in-review"]}}}
+    },
+    {
+      "if": {"properties": {"outcome_state": {"enum": ["reverted", "closed"]}}, "required": ["outcome_state"]},
+      "then": {"properties": {"pack_status": {"enum": ["baseline", "archived"]}}}
+    }
+  ],
+  "additionalProperties": false
 }

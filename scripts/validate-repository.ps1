@@ -30,6 +30,56 @@ if (Test-Path -LiteralPath $catalogPath) {
             $failures.Add("Document catalog points to missing file: $relativePath")
         }
     }
+
+    $documentBlocks = [regex]::Matches($catalogText, '(?ms)^  - id:\s*(?<id>\S+)\s*\r?\n(?<body>.*?)(?=^  - id:|\z)')
+    foreach ($block in $documentBlocks) {
+        $catalogId = $block.Groups['id'].Value.Trim()
+        $body = $block.Groups['body'].Value
+        $catalogFields = @{}
+        foreach ($field in @('path', 'type', 'owner_role', 'approver_role', 'status', 'version', 'review_cycle_days')) {
+            $fieldMatch = [regex]::Match($body, "(?m)^    $([regex]::Escape($field)):\s*(?<value>.+?)\s*$")
+            if ($fieldMatch.Success) { $catalogFields[$field] = $fieldMatch.Groups['value'].Value.Trim() }
+        }
+        if (-not $catalogFields.ContainsKey('path')) { continue }
+
+        $documentPath = Join-Path $repoRoot $catalogFields['path']
+        if (-not (Test-Path -LiteralPath $documentPath)) { continue }
+        $documentText = Get-Content -Raw -LiteralPath $documentPath
+        $requiredMetadata = @('Document ID', 'Type', 'Status', 'Version', 'Owner', 'Approver', 'Scope', 'Effective date', 'Review cycle', 'Changelog')
+        $metadata = @{}
+        foreach ($field in $requiredMetadata) {
+            $matches = [regex]::Matches($documentText, "(?im)^$([regex]::Escape($field)):\s*(?<value>.+?)\s*$")
+            if ($matches.Count -ne 1) {
+                $failures.Add("Governance metadata '$field' must occur exactly once in $($catalogFields['path']); found $($matches.Count)")
+            } else {
+                $metadata[$field] = $matches[0].Groups['value'].Value.Trim()
+            }
+        }
+
+        $expectedMetadata = @{
+            'Document ID' = $catalogId
+            'Type' = $catalogFields['type']
+            'Status' = $catalogFields['status']
+            'Version' = $catalogFields['version']
+            'Owner' = $catalogFields['owner_role']
+            'Approver' = $catalogFields['approver_role']
+            'Review cycle' = "$($catalogFields['review_cycle_days']) days"
+        }
+        foreach ($entry in $expectedMetadata.GetEnumerator()) {
+            if ($metadata.ContainsKey($entry.Key) -and $metadata[$entry.Key] -ine $entry.Value) {
+                $failures.Add("Governance metadata '$($entry.Key)' in $($catalogFields['path']) is '$($metadata[$entry.Key])', expected '$($entry.Value)'")
+            }
+        }
+        if ($metadata.ContainsKey('Scope') -and $metadata['Scope'].Length -lt 20) {
+            $failures.Add("Governance metadata 'Scope' is not descriptive enough in $($catalogFields['path'])")
+        }
+        if ($metadata.ContainsKey('Effective date') -and $catalogFields['status'] -ieq 'active' -and $metadata['Effective date'] -match '(?i)not set|не назнач') {
+            $failures.Add("Active governance document must have an effective date: $($catalogFields['path'])")
+        }
+        if ($metadata.ContainsKey('Changelog') -and $metadata['Changelog'] -notmatch [regex]::Escape($catalogFields['version'])) {
+            $failures.Add("Governance Changelog must mention current version $($catalogFields['version']): $($catalogFields['path'])")
+        }
+    }
 }
 
 $skillFiles = @(Get-ChildItem -LiteralPath (Join-Path $repoRoot '.agents/skills') -Filter 'SKILL.md' -File -Recurse)
@@ -43,14 +93,49 @@ foreach ($skillFile in $skillFiles) {
     }
 }
 
+$featuresPath = Join-Path $repoRoot 'config/features.yaml'
 $codexConfig = Join-Path $repoRoot '.codex/config.toml'
-if (Test-Path -LiteralPath $codexConfig) {
+if ((Test-Path -LiteralPath $featuresPath) -and (Test-Path -LiteralPath $codexConfig)) {
+    $featureText = Get-Content -Raw -LiteralPath $featuresPath
     $configText = Get-Content -Raw -LiteralPath $codexConfig
-    if ($configText -notmatch 'OPENSPACE_CLOUD_MODE\s*=\s*"off"') {
-        $failures.Add('OpenSpace cloud mode is not explicitly off in .codex/config.toml')
+
+    $featureSectionMatch = [regex]::Match($featureText, '(?ms)^  openspace_local:\s*\r?\n(?<body>(?:    .*\r?\n?)*)')
+    $serverSectionMatch = [regex]::Match($configText, '(?ms)^\[mcp_servers\.openspace\]\s*\r?\n(?<body>.*?)(?=^\[|\z)')
+    if (-not $featureSectionMatch.Success) {
+        $failures.Add('Feature openspace_local is missing from config/features.yaml')
     }
-    if ($configText -notmatch '(?m)^enabled\s*=\s*false$') {
-        $failures.Add('OpenSpace must be disabled in the base .codex/config.toml')
+    if (-not $serverSectionMatch.Success) {
+        $failures.Add('MCP server mcp_servers.openspace is missing from .codex/config.toml')
+    }
+
+    if ($featureSectionMatch.Success -and $serverSectionMatch.Success) {
+        $featureEnabledMatch = [regex]::Match($featureSectionMatch.Groups['body'].Value, '(?m)^    enabled:\s*(true|false)\s*$')
+        $serverEnabledMatch = [regex]::Match($serverSectionMatch.Groups['body'].Value, '(?m)^enabled\s*=\s*(true|false)\s*$')
+        if (-not $featureEnabledMatch.Success) {
+            $failures.Add('features.openspace_local.enabled must be explicitly true or false')
+        }
+        if (-not $serverEnabledMatch.Success) {
+            $failures.Add('mcp_servers.openspace.enabled must be explicitly true or false')
+        }
+        if ($featureEnabledMatch.Success -and $serverEnabledMatch.Success) {
+            $featureEnabled = $featureEnabledMatch.Groups[1].Value
+            $serverEnabled = $serverEnabledMatch.Groups[1].Value
+            if ($featureEnabled -ne $serverEnabled) {
+                $failures.Add("OpenSpace activation mismatch: config/features.yaml is '$featureEnabled', .codex/config.toml is '$serverEnabled'")
+            }
+        }
+    }
+
+    if ($featureText -notmatch '(?m)^    cloud_mode:\s*off\s*$' -or
+        $featureText -notmatch '(?m)^  allow_openspace_cloud:\s*false\s*$') {
+        $failures.Add('OpenSpace cloud mode must remain off in config/features.yaml')
+    }
+    if ($configText -notmatch '(?m)^OPENSPACE_CLOUD_MODE\s*=\s*"off"\s*$' -or
+        $configText -notmatch '(?m)^OPENSPACE_CLOUD_TELEMETRY_MODE\s*=\s*"off"\s*$') {
+        $failures.Add('OpenSpace cloud mode and cloud telemetry must remain off in .codex/config.toml')
+    }
+    if ($configText -notmatch '(?m)^OPENSPACE_EVOLUTION_TRIGGERS_ENABLED\s*=\s*"false"\s*$') {
+        $failures.Add('OpenSpace automatic evolution triggers must remain disabled')
     }
 }
 

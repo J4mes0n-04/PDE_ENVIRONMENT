@@ -1,6 +1,6 @@
 # ASE adapter
 
-ASE — будущая среда Agentic Software Engineering. Сейчас адаптер закрепляет стабильный вход реализации.
+ASE (`Agentic Software Engineering`) — инженерная функция реализации. `ASE Engineer` — выполняющая её роль человека, а `ASE Environment` — будущая специализированная среда поддержки или автоматизации этой функции. Сейчас адаптер закрепляет стабильный вход реализации независимо от наличия отдельной среды.
 
 ## Input
 
@@ -12,4 +12,4 @@ Pull Request/commit, technical decisions, карта требований к tes
 
 ## Activation
 
-При создании отдельной ASE среды меняется `features.ase_adapter.mode` с `contract-only` на согласованный transport/API. Семантика contract version 1.0 сохраняется или выпускается major-версия.
+При создании отдельной `ASE Environment` меняется `features.ase_adapter.mode` с `contract-only` на согласованный transport/API. Семантика contract version 1.0 сохраняется или выпускается major-версия.
