@@ -1,6 +1,6 @@
 # PDE operating environment
 
-Этот репозиторий — отправная точка для организации рабочей среды **PDE — Product Definition Engineering** в продуктовой команде, которая разрабатывает и поддерживает программное обеспечение для умных домов, бизнес-центров и гражданской инфраструктуры.
+Этот репозиторий — отправная точка для организации рабочей среды **PDE — Product Definition Engineering** в продуктовой команде, которая разрабатывает и поддерживает программное обеспечение.
 
 Документы написаны на русском языке. Имена файлов, каталогов, полей и технические идентификаторы — на английском, чтобы структура одинаково хорошо читалась человеком и обрабатывалась инструментами.
 
@@ -8,20 +8,7 @@
 
 PDE превращает сигнал о проблеме в проверяемое определение продукта. Git хранит нормативные документы, Product Definition Pack, решения и доказательства. Redmine управляет потоком работы. Cursor и Codex используют `AGENTS.md`, rules и skills. OpenSpace находится между агентной средой и библиотекой skills: он помогает находить, оценивать и улучшать skills, но не имеет права автоматически менять нормативные документы.
 
-```text
-Signal -> PDE -> Product Definition Pack -> ASE adapter -> implementation
-   ^                                                   |
-   |                                                   v
-Outcome Check <- PDE feedback <- QSRE adapter <- evidence and release
-
-Cursor / Codex <-> OpenSpace local MCP <-> .agents/skills
-                         |
-                         v
-                 quality records and proposals
-                         |
-                         v
-                 Pull Request + human approval
-```
+<img width="1672" height="941" alt="pde-environment-flow" src="https://github.com/user-attachments/assets/26a9f880-b6f0-4669-8318-10918f77355d" />
 
 ASE и QSRE пока не развёрнуты как отдельные среды. Репозиторий содержит явные контракты и адаптеры, чтобы подключить их позже без изменения базовой модели PDE.
 
