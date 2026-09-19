@@ -1,0 +1,23 @@
+name: Definition Change
+description: Предложить материальное изменение действующего Pack
+title: "[Definition Change] "
+labels: ["definition-change"]
+body:
+  - type: input
+    id: outcome
+    attributes:
+      label: Outcome ID and Pack version
+    validations:
+      required: true
+  - type: textarea
+    id: trigger
+    attributes:
+      label: New fact and evidence
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact on scope, AC/NFR, risk, evidence and release
+    validations:
+      required: true

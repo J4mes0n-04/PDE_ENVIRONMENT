@@ -1,0 +1,34 @@
+name: Outcome
+description: Создать новый измеримый PDE Outcome
+title: "[Outcome] "
+labels: ["outcome"]
+body:
+  - type: input
+    id: signal
+    attributes:
+      label: Signal or problem evidence
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired measurable outcome
+    validations:
+      required: true
+  - type: input
+    id: owner
+    attributes:
+      label: Outcome Owner
+    validations:
+      required: true
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Initial risk
+      options: [R0, R1, R2, R3, Unknown]
+    validations:
+      required: true
+  - type: textarea
+    id: links
+    attributes:
+      label: Redmine and Pack links

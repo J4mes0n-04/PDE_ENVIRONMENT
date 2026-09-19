@@ -1,0 +1,163 @@
+schema_version: 1
+repository_version: 0.1.0-draft
+documents:
+  - id: PDE-GOV-001
+    path: governance/01-pde-charter.md
+    type: policy
+    owner_role: PDE Lead
+    approver_role: Product Lead
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 180
+  - id: PDE-GOV-002
+    path: governance/02-glossary.md
+    type: standard
+    owner_role: PDE Lead
+    approver_role: Delivery Lead
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 90
+  - id: PDE-GOV-003
+    path: governance/03-roles-and-decision-rights.md
+    type: policy
+    owner_role: Delivery Lead
+    approver_role: Product Lead
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 180
+  - id: PDE-GOV-004
+    path: governance/04-sources-of-truth.md
+    type: policy
+    owner_role: PDE Lead
+    approver_role: Delivery Lead
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 180
+  - id: PDE-GOV-005
+    path: governance/05-risk-model.md
+    type: policy
+    owner_role: Risk Owner
+    approver_role: Product Lead
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 180
+  - id: PDE-GOV-006
+    path: governance/06-agent-autonomy.md
+    type: policy
+    owner_role: PDE Lead
+    approver_role: Security Owner
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 90
+  - id: PDE-GOV-007
+    path: governance/07-pack-standard.md
+    type: standard
+    owner_role: PDE Lead
+    approver_role: Outcome Owner
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 90
+  - id: PDE-GOV-008
+    path: governance/08-definition-change-policy.md
+    type: policy
+    owner_role: Outcome Owner
+    approver_role: PDE Lead
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 180
+  - id: PDE-GOV-009
+    path: governance/09-lifecycle-and-gates.md
+    type: standard
+    owner_role: Delivery Lead
+    approver_role: Product Lead
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 90
+  - id: PDE-GOV-010
+    path: governance/10-evidence-standard.md
+    type: standard
+    owner_role: PDE Lead
+    approver_role: QSRE Function Owner
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 90
+  - id: PDE-GOV-011
+    path: governance/11-git-pr-review-standard.md
+    type: standard
+    owner_role: Engineering Lead
+    approver_role: Delivery Lead
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 180
+  - id: PDE-GOV-012
+    path: governance/12-ci-gates-and-exceptions.md
+    type: policy
+    owner_role: Engineering Lead
+    approver_role: QSRE Function Owner
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 90
+  - id: PDE-GOV-013
+    path: governance/13-release-rollout-rollback.md
+    type: policy
+    owner_role: Release Owner
+    approver_role: Outcome Owner
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 180
+  - id: PDE-GOV-014
+    path: governance/14-outcome-measurement.md
+    type: standard
+    owner_role: Outcome Owner
+    approver_role: Product Lead
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 180
+  - id: PDE-GOV-015
+    path: governance/15-document-governance.md
+    type: policy
+    owner_role: PDE Lead
+    approver_role: Delivery Lead
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 180
+  - id: PDE-GOV-016
+    path: governance/16-ai-data-security-policy.md
+    type: policy
+    owner_role: Security Owner
+    approver_role: Product Lead
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 90
+  - id: PDE-GOV-017
+    path: governance/17-skill-openspace-lifecycle.md
+    type: standard
+    owner_role: PDE Lead
+    approver_role: Engineering Lead
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 90
+  - id: PDE-GOV-018
+    path: governance/18-redmine-workflow.md
+    type: standard
+    owner_role: Delivery Lead
+    approver_role: PDE Lead
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 90
+  - id: PDE-GOV-019
+    path: governance/19-ase-qsre-interface-contract.md
+    type: standard
+    owner_role: PDE Lead
+    approver_role: Engineering Lead
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 90
+  - id: PDE-GOV-020
+    path: governance/20-compliance-obligations-register.md
+    type: register
+    owner_role: Security Owner
+    approver_role: Product Lead
+    status: draft
+    version: 0.1.0
+    review_cycle_days: 90

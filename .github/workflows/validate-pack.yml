@@ -1,0 +1,23 @@
+name: Validate Pack
+
+on:
+  pull_request:
+    paths:
+      - 'workspaces/**/pack.md'
+      - 'workspaces/**/pack.json'
+      - 'schemas/pack.schema.json'
+      - 'governance/07-pack-standard.md'
+      - 'scripts/validate-pack.ps1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate all operational Packs
+        shell: pwsh
+        run: ./scripts/validate-pack.ps1

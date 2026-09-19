@@ -1,0 +1,13 @@
+---
+description: Safe authoring and evolution of PDE agent skills
+globs: .agents/skills/**/SKILL.md
+alwaysApply: false
+---
+
+# Skill changes
+
+- Apply `governance/17-skill-openspace-lifecycle.md`.
+- Keep one focused task per skill and make the description discriminating.
+- Preserve user authority and refer to governance instead of duplicating policy.
+- Treat OpenSpace FIX, DERIVED and CAPTURED outputs as proposals requiring review.
+- Validate frontmatter and remove unfinished placeholders before enabling a skill.

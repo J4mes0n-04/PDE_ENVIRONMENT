@@ -1,0 +1,14 @@
+---
+description: Product Definition Pack consistency and traceability
+globs: workspaces/**/pack.*
+alwaysApply: false
+---
+
+# Pack work
+
+- Apply `governance/07-pack-standard.md` and `05-risk-model.md`.
+- Keep `pack.md` and `pack.json` consistent.
+- Use stable `OUT-*`, `AC-*`, and `NFR-*` identifiers.
+- Separate facts, assumptions, decisions, open questions, in scope and out of scope.
+- Include baseline, target, data source, validation window, rollout and rollback.
+- Run `pwsh ./scripts/validate-pack.ps1 -Path <outcome-folder>`.

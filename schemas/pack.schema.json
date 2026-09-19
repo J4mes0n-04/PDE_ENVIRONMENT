@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://pde.local/schemas/pack.schema.json",
+  "title": "PDE Product Definition Pack control record",
+  "type": "object",
+  "required": [
+    "schema_version", "outcome_id", "title", "status", "pack_type", "version",
+    "risk_level", "autonomy_level", "owners", "problem", "outcome", "scope",
+    "acceptance_criteria", "nfrs", "measurement", "redmine"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "outcome_id": {"type": "string", "pattern": "^OUT-[A-Z0-9-]+$"},
+    "title": {"type": "string", "minLength": 5},
+    "status": {"enum": ["draft", "defined", "ready", "committed", "in-progress", "in-review", "released", "outcome-check", "done", "blocked", "adapt", "reverted", "closed"]},
+    "pack_type": {"enum": ["mini", "full"]},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "risk_level": {"enum": ["R0", "R1", "R2", "R3"]},
+    "autonomy_level": {"enum": ["A0", "A1", "A2", "A3"]},
+    "owners": {
+      "type": "object",
+      "required": ["outcome_owner", "pde_owner", "risk_owner"],
+      "properties": {
+        "outcome_owner": {"type": "string", "minLength": 2},
+        "pde_owner": {"type": "string", "minLength": 2},
+        "risk_owner": {"type": "string", "minLength": 2}
+      }
+    },
+    "problem": {
+      "type": "object",
+      "required": ["summary", "evidence_links"],
+      "properties": {
+        "summary": {"type": "string", "minLength": 20},
+        "evidence_links": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "required": ["statement"],
+      "properties": {"statement": {"type": "string", "minLength": 20}}
+    },
+    "scope": {
+      "type": "object",
+      "required": ["in", "out"],
+      "properties": {
+        "in": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "out": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+      }
+    },
+    "acceptance_criteria": {"$ref": "#/definitions/requirements"},
+    "nfrs": {"$ref": "#/definitions/requirements"},
+    "measurement": {
+      "type": "object",
+      "required": ["metric", "baseline", "target", "source", "validation_window", "decision_rule"],
+      "properties": {
+        "metric": {"type": "string", "minLength": 3},
+        "baseline": {"type": "string", "minLength": 3},
+        "target": {"type": "string", "minLength": 3},
+        "source": {"type": "string", "minLength": 3},
+        "validation_window": {"type": "string", "minLength": 3},
+        "decision_rule": {"type": "string", "minLength": 10}
+      }
+    },
+    "redmine": {
+      "type": "object",
+      "required": ["issue_id", "url"],
+      "properties": {
+        "issue_id": {"type": "string", "minLength": 3},
+        "url": {"type": "string", "minLength": 8}
+      }
+    }
+  },
+  "definitions": {
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "statement"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^(AC|NFR)-[0-9]{3,}$"},
+          "statement": {"type": "string", "minLength": 10}
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

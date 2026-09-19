@@ -1,0 +1,13 @@
+---
+description: Evidence Bundle quality and requirement coverage
+globs: workspaces/**/evidence.md
+alwaysApply: false
+---
+
+# Evidence
+
+- Apply `governance/10-evidence-standard.md`.
+- Link each evidence item to an AC or NFR from the exact Pack version.
+- Record method, result, immutable link, environment/time and limitations.
+- Never convert planned, missing, partial or stale evidence into `pass`.
+- Make coverage gaps and residual risk explicit.

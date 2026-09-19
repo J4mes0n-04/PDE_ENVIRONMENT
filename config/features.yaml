@@ -1,0 +1,49 @@
+schema_version: 1
+environment_version: 0.1.0-draft
+
+features:
+  github:
+    enabled: true
+    required: true
+  github_actions:
+    enabled: true
+    required: true
+  redmine:
+    enabled: true
+    required: true
+  cursor:
+    enabled: true
+    required: false
+  codex:
+    enabled: true
+    required: false
+  openspace_local:
+    enabled: false
+    required: false
+    cloud_mode: off
+    activation_stage: pilot-shadow
+  unleash:
+    enabled: false
+    required: false
+    activation_stage: release-control
+  opentelemetry:
+    enabled: false
+    required: false
+    activation_stage: observability
+  grafana:
+    enabled: false
+    required: false
+    activation_stage: observability
+  ase_adapter:
+    enabled: true
+    required: true
+    mode: contract-only
+  qsre_adapter:
+    enabled: true
+    required: true
+    mode: contract-only
+
+constraints:
+  allow_openspace_cloud: false
+  allow_automatic_governance_updates: false
+  allow_direct_push_to_main: false

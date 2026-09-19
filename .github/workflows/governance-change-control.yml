@@ -1,0 +1,33 @@
+name: Governance change control
+
+on:
+  pull_request:
+    paths:
+      - 'governance/**'
+      - 'templates/**'
+      - '.agents/skills/**'
+      - '.cursor/rules/**'
+      - '.github/workflows/**'
+      - 'config/features.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  governance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Validate governance metadata and PR rationale
+        if: github.event_name == 'pull_request'
+        shell: pwsh
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: ./scripts/check-governance-change.ps1 -BaseRef "origin/${{ github.base_ref }}"
+      - name: Validate governance structure manually
+        if: github.event_name == 'workflow_dispatch'
+        shell: pwsh
+        run: ./scripts/check-governance-change.ps1

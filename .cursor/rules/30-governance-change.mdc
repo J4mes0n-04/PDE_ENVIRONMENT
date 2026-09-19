@@ -1,0 +1,13 @@
+---
+description: Controlled changes to PDE normative documents
+globs: governance/**
+alwaysApply: false
+---
+
+# Governance changes
+
+- Apply `governance/15-document-governance.md`.
+- Preserve Document ID, owner, approver, status and version.
+- Explain the trigger and impact on templates, rules, skills, CI and active Outcomes.
+- Update `governance/document-control.yaml` when metadata changes.
+- OpenSpace may supply evidence or a proposal, never automatic approval or merge.

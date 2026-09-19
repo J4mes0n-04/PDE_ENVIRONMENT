@@ -1,0 +1,22 @@
+name: Validate Evidence
+
+on:
+  pull_request:
+    paths:
+      - 'workspaces/**/evidence.md'
+      - 'workspaces/**/pack.json'
+      - 'governance/10-evidence-standard.md'
+      - 'scripts/validate-evidence.ps1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Evidence Bundles
+        shell: pwsh
+        run: ./scripts/validate-evidence.ps1

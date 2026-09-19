@@ -1,0 +1,14 @@
+---
+description: Core PDE repository boundaries and verification rules
+alwaysApply: true
+---
+
+# PDE core
+
+- Read `AGENTS.md` and applicable governance before editing.
+- Keep platform files outside `workspaces/`; keep project work inside `workspaces/projects/`.
+- Preserve Signal -> Outcome -> Pack -> Slice/PR -> Evidence -> Release -> Outcome Check traceability.
+- Write human explanations in Russian and stable technical identifiers in English.
+- Do not change scope, risk, or baseline without Definition Change.
+- Do not enable optional integrations or cloud transfer implicitly.
+- Run the relevant scripts and report unresolved gaps.

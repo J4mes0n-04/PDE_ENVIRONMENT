@@ -1,0 +1,13 @@
+# Changelog
+
+Все существенные изменения этого пакета фиксируются здесь.
+
+## 0.1.0-draft
+
+- Создан самостоятельный каркас PDE-среды.
+- Добавлены нормативные документы, шаблоны и контракты PDE–ASE–QSRE.
+- Добавлены пять PDE skills, Cursor rules и Codex configuration.
+- Добавлены облегчённая JSON Schema Pack и четыре workflow GitHub Actions.
+- OpenSpace подготовлен как выключенная локальная интеграция без облачного обмена.
+- Unleash, OpenTelemetry и Grafana подготовлены как выключенные опциональные интеграции.
+- Демонстрационный Outcome изолирован в `workspaces/examples/`.

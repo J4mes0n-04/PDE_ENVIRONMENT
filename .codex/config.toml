@@ -1,0 +1,20 @@
+# Project-local Codex configuration. Keep provider credentials in user-level
+# configuration or environment variables, never in this repository.
+
+[mcp_servers.openspace]
+command = "openspace-mcp"
+cwd = "."
+enabled = false
+required = false
+startup_timeout_sec = 20
+tool_timeout_sec = 120
+default_tools_approval_mode = "writes"
+enabled_tools = ["search_skills", "execute_task", "fix_skill"]
+
+[mcp_servers.openspace.env]
+OPENSPACE_HOST_SKILL_DIRS = ".agents/skills"
+OPENSPACE_WORKSPACE = "."
+OPENSPACE_CLOUD_MODE = "off"
+OPENSPACE_CLOUD_TELEMETRY_MODE = "off"
+OPENSPACE_EVOLUTION_EVIDENCE_ENABLED = "true"
+OPENSPACE_EVOLUTION_TRIGGERS_ENABLED = "false"

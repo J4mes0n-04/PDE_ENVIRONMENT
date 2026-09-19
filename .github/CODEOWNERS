@@ -1,0 +1,7 @@
+# Replace placeholder teams before enabling branch protection.
+* @your-org/pde-maintainers
+/governance/ @your-org/pde-governance
+/.github/ @your-org/pde-platform
+/.agents/skills/ @your-org/pde-skills
+/integrations/openspace/ @your-org/pde-platform @your-org/security
+/workspaces/projects/ @your-org/pde-product

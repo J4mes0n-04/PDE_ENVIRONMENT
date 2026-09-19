@@ -1,0 +1,35 @@
+schema_version: 1
+project_key: TBD
+base_url: https://redmine.example.invalid
+trackers:
+  outcome: Outcome
+  delivery_slice: Delivery Slice
+  definition_change: Definition Change
+  risk_blocker: Risk or Blocker
+  service: Service
+custom_fields:
+  outcome_id: Outcome ID
+  pack_url: Pack URL
+  pack_version: Pack Version
+  pack_commit_sha: Pack Commit SHA
+  risk_level: Risk Level
+  autonomy_level: Autonomy Level
+  outcome_owner: Outcome Owner
+  baseline: Baseline
+  target: Target
+  validation_window: Validation Window
+  next_gate: Next Gate
+states:
+  - New
+  - Defined
+  - Ready
+  - Committed
+  - In Progress
+  - In Review
+  - Released
+  - Outcome Check
+  - Done
+  - Blocked
+  - Adapt
+  - Reverted
+  - Closed

@@ -1,0 +1,22 @@
+name: Validate repository
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  repository:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate PDE repository structure
+        shell: pwsh
+        run: ./scripts/validate-repository.ps1
+      - name: Run environment doctor
+        shell: pwsh
+        run: ./scripts/doctor.ps1

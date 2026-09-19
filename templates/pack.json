@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "outcome_id": "OUT-000",
+  "title": "Short human-readable title",
+  "status": "draft",
+  "pack_type": "mini",
+  "version": "0.1.0",
+  "risk_level": "R1",
+  "autonomy_level": "A2",
+  "owners": {
+    "outcome_owner": "TBD",
+    "pde_owner": "TBD",
+    "risk_owner": "TBD"
+  },
+  "problem": {
+    "summary": "Describe the verified problem",
+    "evidence_links": ["https://example.invalid/evidence"]
+  },
+  "outcome": {
+    "statement": "Describe the measurable change"
+  },
+  "scope": {
+    "in": ["Included behavior"],
+    "out": ["Excluded behavior"]
+  },
+  "acceptance_criteria": [
+    {"id": "AC-001", "statement": "Verifiable behavior"}
+  ],
+  "nfrs": [
+    {"id": "NFR-001", "statement": "Verifiable quality constraint"}
+  ],
+  "measurement": {
+    "metric": "Metric name and unit",
+    "baseline": "Baseline with period",
+    "target": "Target threshold",
+    "source": "System of record",
+    "validation_window": "Time window",
+    "decision_rule": "scale | keep | adapt | revert rule"
+  },
+  "redmine": {
+    "issue_id": "RM-000",
+    "url": "https://redmine.example.invalid/issues/000"
+  }
+}
