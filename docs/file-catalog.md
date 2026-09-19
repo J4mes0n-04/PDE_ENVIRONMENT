@@ -47,6 +47,7 @@
 
 - `docs/file-catalog.md` — этот полный перечень и назначение каждого файла.
 - `docs/pde-environment-flow.png` — основная визуальная карта пути Signal → PDE → ASE → QSRE → Outcome Check и локального контура OpenSpace.
+- `docs/pde-web-interface-mockup.png` — концептуальный макет web-интерфейса первичной настройки, подключений и проверки среды PDE.
 
 ## Архитектура
 
@@ -141,3 +142,15 @@
 - `workspaces/examples/DEMO-001-device-offline-alert/ase-handoff.md` — пример передачи в ASE.
 - `workspaces/examples/DEMO-001-device-offline-alert/qsre-feedback.md` — пример обратного сигнала QSRE.
 - `workspaces/examples/DEMO-001-device-offline-alert/outcome-check.md` — заполненный вердикт `keep`.
+- `workspaces/projects/av-control-business/README.md` — обзор рабочего проекта AV Control и его текущего результата.
+- `workspaces/projects/av-control-business/app/README.md` — инструкция запуска web-прототипа AV Control.
+- `workspaces/projects/av-control-business/app/index.html` — точка входа web-прототипа.
+- `workspaces/projects/av-control-business/app/app.js` — клиентская логика регистрации и управления подключениями устройств.
+- `workspaces/projects/av-control-business/app/styles.css` — стили тёмного интерфейса web-прототипа.
+- `workspaces/projects/av-control-business/app/favicon.svg` — векторный значок web-прототипа.
+- `workspaces/projects/av-control-business/outcomes/OUT-AVC-001-web-device-connections/business-requirements.md` — бизнес-требования к регистрации и управлению подключениями устройств.
+- `workspaces/projects/av-control-business/outcomes/OUT-AVC-001-web-device-connections/pack.md` — человекочитаемый Pack результата OUT-AVC-001.
+- `workspaces/projects/av-control-business/outcomes/OUT-AVC-001-web-device-connections/pack.json` — машиночитаемая запись Pack результата OUT-AVC-001.
+- `workspaces/projects/av-control-business/outcomes/OUT-AVC-001-web-device-connections/ase-handoff.md` — контракт передачи результата OUT-AVC-001 в ASE.
+- `workspaces/projects/av-control-business/outcomes/OUT-AVC-001-web-device-connections/implementation-evidence.md` — текущие доказательства реализации прототипа.
+- `workspaces/projects/av-control-business/outcomes/OUT-AVC-001-web-device-connections/prototype-decision-record.md` — журнал решений по web-прототипу.

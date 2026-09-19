@@ -1,12 +1,12 @@
-# Decision log
+# Журнал решений
 
-## DEC-000 Short title
+## DEC-000 — Краткое название
 
-- Date:
-- Status: proposed / accepted / superseded
-- Deciders:
-- Context:
-- Options:
-- Decision:
-- Consequences:
-- Related Pack / DC / PR:
+- Дата:
+- Статус: `proposed | accepted | superseded`
+- Лица, принимающие решение:
+- Контекст:
+- Варианты:
+- Решение:
+- Последствия:
+- Связанные Pack / DC / PR:

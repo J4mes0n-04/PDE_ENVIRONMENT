@@ -1,26 +1,26 @@
-# Evidence Bundle
+# Пакет доказательств
 
-- Outcome ID: `OUT-000`
-- Delivery Slice / Release:
-- Pack version: `0.1.0`
-- Pack commit SHA: `<full-40-character-git-sha>`
-- Risk: `R1`
-- Evidence owner:
-- Status: `draft`
+- Идентификатор результата: `OUT-000`
+- Срез поставки / выпуск:
+- Версия Pack: `0.1.0`
+- SHA коммита Pack: `<полный-40-символьный-sha-коммита>`
+- Риск: `R1`
+- Владелец доказательств:
+- Статус: `draft`
 
-## Evidence index
+## Реестр доказательств
 
-| Evidence ID | Requirement | Method | Result | Immutable link | Environment | Executed at | Producer | Limitations |
+| ID доказательства | Требование | Метод | Результат | Неизменяемая ссылка | Среда | Время выполнения | Автор | Ограничения |
 |---|---|---|---|---|---|---|---|---|
-| EVD-001 | AC-001 | automated test | not-run | `<immutable-link>` | `<environment>` | `<ISO-8601>` | `<person-or-system>` | `<known-limitations>` |
+| EVD-001 | AC-001 | автоматизированный тест | not-run | `<неизменяемая-ссылка>` | `<среда>` | `<ISO-8601>` | `<человек-или-система>` | `<известные-ограничения>` |
 
-## Coverage gaps
+## Пробелы покрытия
 
-Перечислите `fail`, `partial`, `not-run` и отсутствующие AC/NFR. Для каждого укажите решение или waiver.
+Перечислите `fail`, `partial`, `not-run` и отсутствующие AC/NFR. Для каждого укажите решение или утверждённое исключение.
 
-## Independent review
+## Независимая проверка
 
-- Reviewer:
-- Scope:
-- Decision:
-- Residual risk:
+- Проверяющий:
+- Область проверки:
+- Решение:
+- Остаточный риск:

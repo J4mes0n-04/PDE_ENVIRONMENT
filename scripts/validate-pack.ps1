@@ -20,6 +20,15 @@ function Get-BulletField {
     return $null
 }
 
+function Get-BulletFieldAny {
+    param([string]$Text, [string[]]$Labels)
+    foreach ($label in $Labels) {
+        $value = Get-BulletField -Text $Text -Label $label
+        if ($value) { return $value }
+    }
+    return $null
+}
+
 function Test-ContainsLiteral {
     param([AllowNull()][string]$Text, [string]$Value)
     if ([string]::IsNullOrWhiteSpace($Text)) { return $false }
@@ -74,29 +83,32 @@ foreach ($packFile in $packFiles) {
     }
 
     $markdown = Get-Content -Raw -LiteralPath $markdownPath
-    $control = Get-MarkdownSection -Text $markdown -Heading 'Control'
+    $control = Get-MarkdownSection -Text $markdown -Heading 'Управление документом'
     if ([string]::IsNullOrWhiteSpace($control)) {
-        $failures.Add("pack.md is missing the Control section: $markdownPath")
+        $control = Get-MarkdownSection -Text $markdown -Heading 'Control'
+    }
+    if ([string]::IsNullOrWhiteSpace($control)) {
+        $failures.Add("В pack.md отсутствует раздел 'Управление документом': $markdownPath")
         continue
     }
 
-    $controlChecks = [ordered]@{
-        'Outcome ID' = [string]$pack.outcome_id
-        'Pack type' = [string]$pack.pack_type
-        'Version' = [string]$pack.version
-        'Outcome state' = [string]$pack.outcome_state
-        'Pack status' = [string]$pack.pack_status
-    }
-    foreach ($entry in $controlChecks.GetEnumerator()) {
-        $actual = Get-BulletField -Text $control -Label $entry.Key
+    $controlChecks = @(
+        @{ Labels = @('Идентификатор результата', 'Outcome ID'); Value = [string]$pack.outcome_id },
+        @{ Labels = @('Тип пакета', 'Pack type'); Value = [string]$pack.pack_type },
+        @{ Labels = @('Версия', 'Version'); Value = [string]$pack.version },
+        @{ Labels = @('Состояние результата', 'Outcome state'); Value = [string]$pack.outcome_state },
+        @{ Labels = @('Статус пакета', 'Pack status'); Value = [string]$pack.pack_status }
+    )
+    foreach ($entry in $controlChecks) {
+        $actual = Get-BulletFieldAny -Text $control -Labels $entry.Labels
         if (-not (Test-ContainsLiteral -Text $actual -Value $entry.Value)) {
-            $failures.Add("pack.md Control field '$($entry.Key)' does not match pack.json value '$($entry.Value)': $markdownPath")
+            $failures.Add("Поле pack.md '$($entry.Labels[0])' не соответствует значению pack.json '$($entry.Value)': $markdownPath")
         }
     }
 
-    $riskAutonomy = Get-BulletField -Text $control -Label 'Risk / autonomy'
+    $riskAutonomy = Get-BulletFieldAny -Text $control -Labels @('Риск / автономия', 'Risk / autonomy')
     if (-not $riskAutonomy) {
-        $riskAutonomy = "$(Get-BulletField -Text $control -Label 'Risk') / $(Get-BulletField -Text $control -Label 'Autonomy')"
+        $riskAutonomy = "$(Get-BulletFieldAny -Text $control -Labels @('Риск', 'Risk')) / $(Get-BulletFieldAny -Text $control -Labels @('Автономия', 'Autonomy'))"
     }
     foreach ($expected in @([string]$pack.risk_level, [string]$pack.autonomy_level)) {
         if (-not (Test-ContainsLiteral -Text $riskAutonomy -Value $expected)) {
@@ -105,13 +117,13 @@ foreach ($packFile in $packFiles) {
     }
 
     foreach ($owner in @(
-        @{ Label = 'Outcome Owner'; Value = [string]$pack.owners.outcome_owner },
-        @{ Label = 'PDE Owner'; Value = [string]$pack.owners.pde_owner },
-        @{ Label = 'Risk Owner'; Value = [string]$pack.owners.risk_owner }
+        @{ Labels = @('Владелец результата', 'Outcome Owner'); Value = [string]$pack.owners.outcome_owner },
+        @{ Labels = @('Владелец PDE', 'PDE Owner'); Value = [string]$pack.owners.pde_owner },
+        @{ Labels = @('Владелец риска', 'Risk Owner'); Value = [string]$pack.owners.risk_owner }
     )) {
-        $actual = Get-BulletField -Text $control -Label $owner.Label
+        $actual = Get-BulletFieldAny -Text $control -Labels $owner.Labels
         if (-not (Test-ContainsLiteral -Text $actual -Value $owner.Value)) {
-            $failures.Add("pack.md Control field '$($owner.Label)' does not match pack.json value '$($owner.Value)': $markdownPath")
+            $failures.Add("Поле pack.md '$($owner.Labels[0])' не соответствует значению pack.json '$($owner.Value)': $markdownPath")
         }
     }
 

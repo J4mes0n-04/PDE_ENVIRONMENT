@@ -1,25 +1,25 @@
-# Outcome Check
+# Проверка результата
 
-- Outcome ID: `OUT-000`
-- Pack version:
-- Release version/date:
-- Observation window:
-- Outcome Owner:
+- Идентификатор результата: `OUT-000`
+- Версия Pack:
+- Версия / дата выпуска:
+- Окно наблюдения:
+- Владелец результата:
 
-## Metric result
+## Результат метрики
 
-- Baseline:
-- Target:
-- Actual:
-- Source and query/dashboard:
-- Data quality limitations:
+- Исходный уровень:
+- Цель:
+- Фактическое значение:
+- Источник и запрос / панель:
+- Ограничения качества данных:
 
-## Secondary effects
+## Вторичные эффекты
 
-Положительные и отрицательные изменения, support signals, defects и риски.
+Положительные и отрицательные изменения, сигналы поддержки, дефекты и риски.
 
-## Decision
+## Решение
 
 `scale | keep | adapt | revert`
 
-Обоснование, владелец, дата и следующий Signal/Outcome/Definition Change.
+Обоснование, владелец, дата и следующий сигнал, результат или изменение определения.

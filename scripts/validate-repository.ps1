@@ -145,6 +145,61 @@ try {
     $failures.Add("Invalid JSON schema: $($_.Exception.Message)")
 }
 
+# Выходные артефакты рабочих пространств должны быть русскоязычными.
+# Технические идентификаторы, ключи, перечисления, код и официальные названия продуктов могут оставаться английскими.
+$workspacesRoot = Join-Path $repoRoot 'workspaces'
+$workspaceMarkdownFiles = @(Get-ChildItem -LiteralPath $workspacesRoot -Filter '*.md' -File -Recurse | Where-Object {
+    $_.FullName -notmatch '[\\/](node_modules|dist|build|coverage)[\\/]'
+})
+$forbiddenEnglishLabels = '(?im)^\s*-\s*(Outcome ID|Pack type|Outcome state|Pack status|Risk / autonomy|Outcome Owner|PDE Owner|Risk Owner|Evidence owner|Pack version|Pack commit SHA|Release Owner)\s*:'
+foreach ($markdownFile in $workspaceMarkdownFiles) {
+    $relativePath = [IO.Path]::GetRelativePath($repoRoot, $markdownFile.FullName).Replace('\', '/')
+    $text = Get-Content -Raw -LiteralPath $markdownFile.FullName
+    if ($text -notmatch '[А-Яа-яЁё]') {
+        $failures.Add("Workspace document has no Russian human-readable text: $relativePath")
+    }
+    foreach ($heading in [regex]::Matches($text, '(?m)^#{1,6}\s+(?<title>.+?)\s*$')) {
+        $title = $heading.Groups['title'].Value
+        if ($title -match '[A-Za-z]' -and $title -notmatch '[А-Яа-яЁё]') {
+            $failures.Add("Workspace heading must be written in Russian: '$title' in $relativePath")
+        }
+    }
+    foreach ($label in [regex]::Matches($text, $forbiddenEnglishLabels)) {
+        $failures.Add("Workspace field label must be written in Russian: '$($label.Groups[1].Value)' in $relativePath")
+    }
+}
+
+$workspacePackFiles = @(Get-ChildItem -LiteralPath $workspacesRoot -Filter 'pack.json' -File -Recurse)
+foreach ($packFile in $workspacePackFiles) {
+    $relativePath = [IO.Path]::GetRelativePath($repoRoot, $packFile.FullName).Replace('\', '/')
+    try {
+        $pack = Get-Content -Raw -LiteralPath $packFile.FullName | ConvertFrom-Json -Depth 100
+        $humanReadableValues = @(
+            [string]$pack.title,
+            [string]$pack.problem.summary,
+            [string]$pack.outcome.statement,
+            @($pack.scope.in),
+            @($pack.scope.out),
+            @($pack.acceptance_criteria | ForEach-Object { $_.statement }),
+            @($pack.nfrs | ForEach-Object { $_.statement }),
+            [string]$pack.measurement.metric,
+            [string]$pack.measurement.baseline,
+            [string]$pack.measurement.target,
+            [string]$pack.measurement.decision_rule,
+            @($pack.release.rollout),
+            @($pack.release.stop_conditions),
+            @($pack.release.rollback)
+        )
+        foreach ($value in $humanReadableValues) {
+            if (-not [string]::IsNullOrWhiteSpace([string]$value) -and [string]$value -notmatch '[А-Яа-яЁё]') {
+                $failures.Add("Human-readable Pack value must be written in Russian: '$value' in $relativePath")
+            }
+        }
+    } catch {
+        $failures.Add("Cannot check workspace Pack language in ${relativePath}: $($_.Exception.Message)")
+    }
+}
+
 $catalogFile = Join-Path $repoRoot 'docs/file-catalog.md'
 if (Test-Path -LiteralPath $catalogFile) {
     $fileCatalog = Get-Content -Raw -LiteralPath $catalogFile

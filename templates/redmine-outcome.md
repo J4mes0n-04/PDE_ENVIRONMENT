@@ -1,22 +1,22 @@
-# Redmine Outcome template
+# Шаблон результата для Redmine
 
-## Summary
+## Краткое описание
 
-Краткое название измеримого Outcome.
+Краткое название измеримого результата.
 
-## Required fields
+## Обязательные поля
 
-- Outcome ID:
-- Outcome Owner:
-- Risk level:
-- Autonomy level:
-- State:
-- Pack URL:
-- Pack version / commit SHA:
-- Baseline / target:
-- Validation window:
-- Next gate:
+- Идентификатор результата:
+- Владелец результата:
+- Уровень риска:
+- Уровень автономии:
+- Состояние:
+- URL Pack:
+- Версия Pack / SHA коммита:
+- Исходный уровень / цель:
+- Окно проверки:
+- Следующий гейт:
 
-## Links
+## Ссылки
 
-Pack, Pull Requests, Evidence Bundle, Release и Outcome Check. Полный текст Pack сюда не копируется.
+Pack, запросы на слияние (PR), пакет доказательств, выпуск и проверка результата. Полный текст Pack сюда не копируется.

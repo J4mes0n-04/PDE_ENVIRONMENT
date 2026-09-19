@@ -1,28 +1,28 @@
-# ASE handoff
+# Передача в ASE
 
-- Contract version: `1.0`
-- Outcome ID:
-- Pack version and commit SHA:
-- Risk / autonomy:
-- PDE contact:
-- ASE Function Owner:
+- Версия контракта: `1.0`
+- Идентификатор результата:
+- Версия Pack и SHA коммита:
+- Риск / автономия:
+- Контакт PDE:
+- Владелец функции ASE:
 
-## Delivery intent
+## Цель передачи
 
-Outcome, priority and required Delivery Slices.
+Целевой результат, приоритет и обязательные срезы поставки.
 
-## Implementation boundaries
+## Границы реализации
 
-What ASE may decide and what requires Definition Change.
+Что ASE может решать самостоятельно, а что требует изменения определения.
 
-## Requirements
+## Требования
 
-Linked AC/NFR, compatibility, data, security and operational constraints.
+Связанные AC/NFR, совместимость, данные, безопасность и эксплуатационные ограничения.
 
-## Expected evidence
+## Ожидаемые доказательства
 
-Tests, reviews, artifacts and traceability expected from ASE.
+Тесты, проверки, артефакты и трассировка, ожидаемые от ASE.
 
-## Open questions and acceptance
+## Открытые вопросы и приёмка
 
-Questions, owner, due date and ASE acceptance/rejection of handoff.
+Вопросы, владельцы, сроки и принятие либо отклонение передачи со стороны ASE.

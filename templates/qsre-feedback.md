@@ -1,25 +1,25 @@
-# QSRE feedback
+# Обратная связь QSRE
 
-- Contract version: `1.0`
-- Feedback ID: `QF-000`
-- Outcome ID:
-- Pack version/SHA:
-- Type: `clarification | definition-change | defect | governance-signal`
-- Severity:
-- QSRE Function Owner:
+- Версия контракта: `1.0`
+- Идентификатор обратной связи: `QF-000`
+- Идентификатор результата:
+- Версия / SHA Pack:
+- Тип: `clarification | definition-change | defect | governance-signal`
+- Критичность:
+- Владелец функции QSRE:
 
-## Observation and evidence
+## Наблюдение и доказательства
 
-What was observed, where and when; include immutable links.
+Что, где и когда наблюдалось; приложите неизменяемые ссылки.
 
-## Affected identifiers
+## Затронутые идентификаторы
 
-AC, NFR, risk, Slice, PR, release or governance document.
+AC, NFR, риск, срез, PR, выпуск или нормативный документ.
 
-## Required PDE decision
+## Необходимое решение PDE
 
-Question or change that must be decided, required timing and release impact.
+Вопрос или изменение, которое необходимо решить, требуемый срок и влияние на выпуск.
 
-## Resolution
+## Решение
 
-Decision, owner, linked DC/defect/RFC and closure evidence.
+Решение, владелец, связанный DC / дефект / RFC и доказательство закрытия.

@@ -1,34 +1,34 @@
-# Definition Change
+# Изменение определения
 
-- Change ID: `DC-000`
-- Outcome ID: `OUT-000`
-- Current Pack version:
-- Proposed Pack version:
-- Status: `proposed`
-- Requested by:
-- Decision owner:
+- Идентификатор изменения: `DC-000`
+- Идентификатор результата: `OUT-000`
+- Текущая версия Pack:
+- Предлагаемая версия Pack:
+- Статус: `proposed`
+- Инициатор:
+- Владелец решения:
 
-## Trigger
+## Причина
 
-Какой новый факт потребовал изменить baseline.
+Какой новый факт потребовал изменить исходную версию определения.
 
-## Proposed change
+## Предлагаемое изменение
 
-Что именно меняется и какие identifiers затронуты.
+Что именно меняется и какие идентификаторы затронуты.
 
-## Impact
+## Влияние
 
-- Active slices and Pull Requests:
-- Acceptance criteria and NFR:
-- Evidence that becomes stale:
-- Risk and autonomy:
-- Release and rollback:
-- Metrics and validation window:
+- Активные срезы и запросы на слияние (PR):
+- Критерии приёмки и NFR:
+- Устаревающие доказательства:
+- Риск и автономия:
+- Выпуск и откат:
+- Метрики и окно проверки:
 
-## Alternatives
+## Альтернативы
 
 Какие варианты рассмотрены и почему отклонены.
 
-## Decision
+## Решение
 
-`approved | rejected | deferred` с причиной, approver и датой.
+`approved | rejected | deferred` с причиной, утвердившим лицом и датой.

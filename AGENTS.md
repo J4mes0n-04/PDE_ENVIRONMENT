@@ -1,37 +1,44 @@
-# PDE repository instructions
+# Инструкции репозитория PDE
 
-## Source of truth
+## Язык выходных артефактов
 
-- Read `governance/` before changing rules, templates, skills, CI, or integration behavior.
-- Treat `workspaces/projects/` as the only location for operational project files. Treat `workspaces/examples/` as non-production examples. Project work in `workspaces/` MUST NOT change platform files outside `workspaces/`.
-- Do not copy a full Product Definition Pack into Redmine; store a link to a Git commit instead.
+- Весь человекочитаемый текст в файлах, создаваемых или изменяемых внутри `workspaces/projects/` и `workspaces/examples/`, ОБЯЗАТЕЛЬНО должен быть написан на русском языке.
+- Английский язык разрешён для имён файлов и каталогов, кода, ключей JSON/YAML, устойчивых идентификаторов (`OUT-001`, `AC-001`, `NFR-001`, `EVD-001`, `DC-001`), служебных значений перечислений (`draft`, `ready`, `pass`, `scale`) и официальных названий продуктов и инструментов.
+- Если необходим английский технический термин, при первом использовании добавьте понятное русское пояснение.
+- Не копируйте английские заголовки и пояснения из устаревших артефактов: используйте актуальные русскоязычные шаблоны из `templates/`.
 
-## Required traceability
+## Источники истины
 
-- Preserve the chain: Signal -> Outcome -> Pack -> Delivery Slice -> PR -> Evidence -> Release -> Outcome Check.
-- Use stable English identifiers such as `OUT-001`, `AC-001`, `NFR-001`, `EVD-001`, and `DC-001`.
-- Keep human-readable Russian explanations next to identifiers.
+- Перед изменением правил, шаблонов, навыков, CI или поведения интеграций изучите каталог `governance/`.
+- Используйте `workspaces/projects/` как единственное место для рабочих файлов проектов. Считайте `workspaces/examples/` только демонстрационными примерами, не предназначенными для промышленной работы. При работе над проектом в `workspaces/` ЗАПРЕЩЕНО изменять файлы платформы за пределами `workspaces/`.
+- Не копируйте полный Pack в Redmine; вместо этого сохраняйте ссылку на конкретный коммит Git.
 
-## Change boundaries
+## Обязательная трассировка
 
-- Platform files MUST NOT be created or modified while working in `workspaces/`.
-- Create and generate project files only inside `workspaces/projects/<project-id>/`.
-- Do not write operational work to `workspaces/` root or `workspaces/examples/`.
-- `governance/`, `architecture/`, `templates/`, `schemas/`, `scripts/`, `integrations/`, `.agents/`, `.cursor/`, `.codex/` and CI are platform. A project in `workspaces/` MUST NOT change them.
-- Platform artifacts MAY and SHOULD constrain `workspaces/`: copy templates into an Outcome folder, validate Pack/Evidence, apply skills and rules. Do not mix a platform change into the same edit as project generation.
-- Do not expand scope or alter an Outcome without a Definition Change record.
-- Do not edit governance automatically from OpenSpace results. Create a proposal or Pull Request for human approval.
-- Do not enable optional integrations or cloud data transfer without an explicit decision recorded in Git.
-- Do not treat green tests alone as sufficient evidence.
+- Сохраняйте цепочку: сигнал → результат → Pack → срез поставки → PR → доказательство → выпуск → проверка результата.
+- Используйте устойчивые английские идентификаторы, например `OUT-001`, `AC-001`, `NFR-001`, `EVD-001` и `DC-001`.
+- Рядом с идентификаторами размещайте понятные человеку пояснения на русском языке.
 
-## Verification
+## Границы изменений
 
-- After changing a Pack, run `pwsh ./scripts/validate-pack.ps1`.
-- After changing Evidence, run `pwsh ./scripts/validate-evidence.ps1`.
-- After changing repository structure, governance, templates, integrations, skills, or workflows, run `pwsh ./scripts/validate-repository.ps1`.
-- Report failed checks and unresolved assumptions; do not describe unverified work as complete.
+- Во время работы в `workspaces/` ЗАПРЕЩЕНО создавать или изменять файлы платформы.
+- Создавайте и генерируйте файлы проекта только внутри `workspaces/projects/<project-id>/`.
+- Не размещайте рабочие материалы в корне `workspaces/` или в `workspaces/examples/`.
+- Каталоги `governance/`, `architecture/`, `templates/`, `schemas/`, `scripts/`, `integrations/`, `.agents/`, `.cursor/`, `.codex/` и конфигурация CI относятся к платформе. Проекту из `workspaces/` ЗАПРЕЩЕНО их изменять.
+- Артефакты платформы МОГУТ и ДОЛЖНЫ задавать ограничения для `workspaces/`: разрешено копировать шаблоны в каталог результата, проверять Pack и доказательства, применять навыки и правила. Не объединяйте изменение платформы и генерацию проектных файлов в одном изменении.
+- Не расширяйте область работ и не изменяйте целевой результат без записи об изменении определения.
+- Не изменяйте нормативные документы автоматически по результатам OpenSpace. Создайте предложение или PR для утверждения человеком.
+- Не включайте дополнительные интеграции или облачную передачу данных без явно зафиксированного в Git решения.
+- Не считайте одни только успешно пройденные тесты достаточным доказательством.
 
-## Completion
+## Проверка
 
-- A delivery task is complete only when acceptance criteria have linked evidence and the required handoff is present.
-- An Outcome is complete only after `outcome-check.md` records `scale`, `keep`, `adapt`, or `revert`.
+- После изменения Pack запустите `pwsh ./scripts/validate-pack.ps1`.
+- После изменения доказательств запустите `pwsh ./scripts/validate-evidence.ps1`.
+- После изменения структуры репозитория, нормативных документов, шаблонов, интеграций, навыков или рабочих процессов запустите `pwsh ./scripts/validate-repository.ps1`.
+- Сообщайте о неуспешных проверках и нерешённых допущениях; не называйте непроверенную работу завершённой.
+
+## Условия завершения
+
+- Задача поставки считается завершённой, только когда с критериями приёмки связаны доказательства и оформлена обязательная передача.
+- Целевой результат считается завершённым, только когда в `outcome-check.md` зафиксировано решение `scale`, `keep`, `adapt` или `revert`.

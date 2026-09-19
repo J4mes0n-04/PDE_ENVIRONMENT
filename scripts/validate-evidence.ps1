@@ -22,6 +22,15 @@ function Get-BulletField {
     return $null
 }
 
+function Get-BulletFieldAny {
+    param([AllowNull()][string]$Text, [string[]]$Labels)
+    foreach ($label in $Labels) {
+        $value = Get-BulletField -Text $Text -Label $label
+        if ($value) { return $value }
+    }
+    return $null
+}
+
 function Convert-TableRow {
     param([string]$Line)
     return @(($Line.Trim().Trim('|') -split '\|') | ForEach-Object { $_.Trim().Trim('`') })
@@ -76,12 +85,12 @@ foreach ($evidenceFile in $evidenceFiles) {
     }
 
     $isExample = $evidenceFile.FullName -match '[\\/]workspaces[\\/]examples[\\/]'
-    $outcomeId = Get-BulletField -Text $text -Label 'Outcome ID'
-    $packVersion = Get-BulletField -Text $text -Label 'Pack version'
-    $packSha = Get-BulletField -Text $text -Label 'Pack commit SHA'
-    $risk = Get-BulletField -Text $text -Label 'Risk'
-    $evidenceOwner = Get-BulletField -Text $text -Label 'Evidence owner'
-    $bundleStatusValue = Get-BulletField -Text $text -Label 'Status'
+    $outcomeId = Get-BulletFieldAny -Text $text -Labels @('Идентификатор результата', 'Outcome ID')
+    $packVersion = Get-BulletFieldAny -Text $text -Labels @('Версия Pack', 'Pack version')
+    $packSha = Get-BulletFieldAny -Text $text -Labels @('SHA коммита Pack', 'Pack commit SHA')
+    $risk = Get-BulletFieldAny -Text $text -Labels @('Риск', 'Risk')
+    $evidenceOwner = Get-BulletFieldAny -Text $text -Labels @('Владелец доказательств', 'Evidence owner')
+    $bundleStatusValue = Get-BulletFieldAny -Text $text -Labels @('Статус', 'Status')
     $bundleStatus = if ($bundleStatusValue) { $bundleStatusValue.ToLowerInvariant() } else { '' }
 
     foreach ($check in @(
@@ -123,7 +132,10 @@ foreach ($evidenceFile in $evidenceFiles) {
         }
     }
 
-    $index = Get-MarkdownSection -Text $text -Heading 'Evidence index'
+    $index = Get-MarkdownSection -Text $text -Heading 'Реестр доказательств'
+    if ([string]::IsNullOrWhiteSpace($index)) {
+        $index = Get-MarkdownSection -Text $text -Heading 'Evidence index'
+    }
     $tableLines = @($index -split '\r?\n' | Where-Object { $_.Trim().StartsWith('|') })
     if ($tableLines.Count -lt 3) {
         $failures.Add("Evidence index must contain a header and at least one evidence row: $($evidenceFile.FullName)")
@@ -131,14 +143,31 @@ foreach ($evidenceFile in $evidenceFiles) {
     }
 
     $headers = Convert-TableRow -Line $tableLines[0]
-    $requiredColumns = @('Evidence ID', 'Requirement', 'Method', 'Result', 'Immutable link', 'Environment', 'Executed at', 'Producer', 'Limitations')
+    $requiredColumns = @(
+        @{ Key = 'Evidence ID'; Labels = @('ID доказательства', 'Evidence ID') },
+        @{ Key = 'Requirement'; Labels = @('Требование', 'Requirement') },
+        @{ Key = 'Method'; Labels = @('Метод', 'Method') },
+        @{ Key = 'Result'; Labels = @('Результат', 'Result') },
+        @{ Key = 'Immutable link'; Labels = @('Неизменяемая ссылка', 'Immutable link') },
+        @{ Key = 'Environment'; Labels = @('Среда', 'Environment') },
+        @{ Key = 'Executed at'; Labels = @('Время выполнения', 'Executed at') },
+        @{ Key = 'Producer'; Labels = @('Автор', 'Producer') },
+        @{ Key = 'Limitations'; Labels = @('Ограничения', 'Limitations') }
+    )
     $columnIndex = @{}
     foreach ($column in $requiredColumns) {
-        $indexOf = [array]::IndexOf($headers, $column)
+        $indexOf = -1
+        foreach ($label in $column.Labels) {
+            $candidateIndex = [array]::IndexOf($headers, $label)
+            if ($candidateIndex -ge 0) {
+                $indexOf = $candidateIndex
+                break
+            }
+        }
         if ($indexOf -lt 0) {
-            $failures.Add("Evidence index is missing column '$column': $($evidenceFile.FullName)")
+            $failures.Add("В реестре доказательств отсутствует столбец '$($column.Labels[0])': $($evidenceFile.FullName)")
         } else {
-            $columnIndex[$column] = $indexOf
+            $columnIndex[$column.Key] = $indexOf
         }
     }
     if ($columnIndex.Count -ne $requiredColumns.Count) { continue }
@@ -196,7 +225,10 @@ foreach ($evidenceFile in $evidenceFiles) {
         if ($result -ne 'pass') { [void]$nonPassRequirements.Add($requirementId) }
     }
 
-    $coverageGaps = Get-MarkdownSection -Text $text -Heading 'Coverage gaps'
+    $coverageGaps = Get-MarkdownSection -Text $text -Heading 'Пробелы покрытия'
+    if ([string]::IsNullOrWhiteSpace($coverageGaps)) {
+        $coverageGaps = Get-MarkdownSection -Text $text -Heading 'Coverage gaps'
+    }
     if (Test-Placeholder -Value $coverageGaps) {
         $failures.Add("Coverage gaps must explicitly state gaps or their absence: $($evidenceFile.FullName)")
     }
@@ -213,14 +245,21 @@ foreach ($evidenceFile in $evidenceFiles) {
         }
     }
 
-    $review = Get-MarkdownSection -Text $text -Heading 'Independent review'
-    if (Test-Placeholder -Value (Get-BulletField -Text $review -Label 'Residual risk')) {
+    $review = Get-MarkdownSection -Text $text -Heading 'Независимая проверка'
+    if ([string]::IsNullOrWhiteSpace($review)) {
+        $review = Get-MarkdownSection -Text $text -Heading 'Independent review'
+    }
+    if (Test-Placeholder -Value (Get-BulletFieldAny -Text $review -Labels @('Остаточный риск', 'Residual risk'))) {
         $failures.Add("Independent review must state Residual risk: $($evidenceFile.FullName)")
     }
     if ($pack.risk_level -in @('R2', 'R3')) {
-        foreach ($label in @('Reviewer', 'Scope', 'Decision')) {
-            if (Test-Placeholder -Value (Get-BulletField -Text $review -Label $label)) {
-                $failures.Add("Risk $($pack.risk_level) requires Independent review field '$label': $($evidenceFile.FullName)")
+        foreach ($field in @(
+            @{ Labels = @('Проверяющий', 'Reviewer') },
+            @{ Labels = @('Область проверки', 'Scope') },
+            @{ Labels = @('Решение', 'Decision') }
+        )) {
+            if (Test-Placeholder -Value (Get-BulletFieldAny -Text $review -Labels $field.Labels)) {
+                $failures.Add("Risk $($pack.risk_level) requires Independent review field '$($field.Labels[0])': $($evidenceFile.FullName)")
             }
         }
     }

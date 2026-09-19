@@ -1,28 +1,28 @@
-# Release plan
+# План выпуска
 
-- Outcome ID:
-- Release ID/version:
-- Pack version/SHA:
-- Risk level:
-- Release Owner:
-- Planned window:
+- Идентификатор результата:
+- Идентификатор / версия выпуска:
+- Версия / SHA Pack:
+- Уровень риска:
+- Владелец выпуска:
+- Плановое окно:
 
-## Preconditions
+## Предварительные условия
 
-Required checks, approvals and environment readiness.
+Обязательные проверки, согласования и готовность среды.
 
-## Rollout
+## Развёртывание
 
-Segments, stages, feature flags, observation time and progression criteria.
+Сегменты, этапы, флаги функций, время наблюдения и критерии перехода.
 
-## Stop conditions
+## Условия остановки
 
-Signals that pause or stop rollout.
+Сигналы для приостановки или остановки развёртывания.
 
-## Rollback or roll-forward
+## Откат или исправление вперёд
 
-Trigger, authority, exact procedure, data implications and recovery target.
+Триггер, полномочия, точная процедура, влияние на данные и целевое восстановление.
 
-## Communication and audit
+## Коммуникация и аудит
 
-Stakeholders, status locations and artifacts retained after release.
+Заинтересованные стороны, места публикации статуса и артефакты, сохраняемые после выпуска.

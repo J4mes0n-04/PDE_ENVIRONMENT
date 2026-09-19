@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "outcome_id": "OUT-000",
-  "title": "Short human-readable title",
+  "title": "Краткое понятное название",
   "outcome_state": "new",
   "pack_status": "draft",
   "pack_type": "mini",
@@ -9,51 +9,51 @@
   "risk_level": "R1",
   "autonomy_level": "A2",
   "owners": {
-    "outcome_owner": "TBD",
-    "pde_owner": "TBD",
-    "risk_owner": "TBD"
+    "outcome_owner": "Указать владельца результата",
+    "pde_owner": "Указать владельца PDE",
+    "risk_owner": "Указать владельца риска"
   },
   "problem": {
-    "summary": "Describe the verified problem",
+    "summary": "Опишите подтверждённую проблему",
     "evidence_links": ["https://example.invalid/evidence"]
   },
   "outcome": {
-    "statement": "Describe the measurable change"
+    "statement": "Опишите измеримое изменение"
   },
   "scope": {
-    "in": ["Included behavior"],
-    "out": ["Excluded behavior"]
+    "in": ["Поведение, входящее в область действия"],
+    "out": ["Поведение, не входящее в область действия"]
   },
   "acceptance_criteria": [
-    {"id": "AC-001", "statement": "Verifiable behavior"}
+    {"id": "AC-001", "statement": "Проверяемое поведение"}
   ],
   "nfrs": [
-    {"id": "NFR-001", "statement": "Verifiable quality constraint"}
+    {"id": "NFR-001", "statement": "Проверяемое ограничение качества"}
   ],
   "open_questions": [],
   "measurement": {
-    "metric": "Metric name and unit",
-    "baseline": "Baseline with period",
-    "target": "Target threshold",
-    "source": "System of record",
-    "validation_window": "Time window",
-    "decision_rule": "scale | keep | adapt | revert rule"
+    "metric": "Название метрики и единица измерения",
+    "baseline": "Исходный уровень с периодом измерения",
+    "target": "Целевое пороговое значение",
+    "source": "Система — источник данных",
+    "validation_window": "Окно проверки",
+    "decision_rule": "Правило выбора scale | keep | adapt | revert"
   },
   "telemetry": {
     "signals": [
-      {"name": "Outcome signal", "source": "System of record", "decision_use": "Supports the Outcome decision rule"}
+      {"name": "Сигнал результата", "source": "Система — источник данных", "decision_use": "Поддерживает правило решения по результату"}
     ],
-    "observation_window": "Defined observation period"
+    "observation_window": "Заданный период наблюдения"
   },
   "test_plan": {
-    "strategy": "Verify every AC and NFR with reproducible evidence",
+    "strategy": "Проверить каждый AC и NFR воспроизводимыми доказательствами",
     "environments": ["test"],
     "requirement_coverage": ["AC-001", "NFR-001"]
   },
   "release": {
-    "rollout": ["Controlled rollout step"],
-    "stop_conditions": ["Measurable stop condition"],
-    "rollback": ["Verified rollback action"]
+    "rollout": ["Контролируемый шаг развёртывания"],
+    "stop_conditions": ["Измеримое условие остановки"],
+    "rollback": ["Проверенное действие отката"]
   },
   "redmine": {
     "issue_id": "RM-000",
