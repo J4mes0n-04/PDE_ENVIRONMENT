@@ -1,0 +1,64 @@
+name: Notify ASE that PDE is Ready
+
+on:
+  workflow_dispatch:
+    inputs:
+      outcome_id:
+        description: Идентификатор Outcome
+        required: true
+        type: string
+      artifact_path:
+        description: Путь к ASE handoff
+        required: true
+        type: string
+      summary:
+        description: Краткое пояснение для ASE
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    environment: notify-ase
+    steps:
+      - name: Create GitHub App token for ASE
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.ASE_NOTIFY_APP_ID }}
+          private-key: ${{ secrets.ASE_NOTIFY_APP_PRIVATE_KEY }}
+          owner: J4mes0n-04
+          repositories: ase-environment
+
+      - name: Create ASE notification issue
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          OUTCOME_ID: ${{ inputs.outcome_id }}
+          ARTIFACT_PATH: ${{ inputs.artifact_path }}
+          SUMMARY: ${{ inputs.summary }}
+          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if ! echo "$SOURCE_SHA" | grep -Eq '^[0-9a-fA-F]{40}$'; then
+            echo "source_sha должен быть полным 40-символьным SHA."
+            exit 1
+          fi
+          {
+            echo "$SUMMARY"
+            echo
+            echo "---"
+            echo
+            echo "Автоматизация создаёт только уведомление. Она не принимает Ready-решение, не меняет Pack и не объединяет Pull Request."
+            echo
+            echo "- event_type: \`pde-ready\`"
+            echo "- source_repository: \`$SOURCE_REPOSITORY\`"
+            echo "- source_sha: \`$SOURCE_SHA\`"
+            echo "- target_repository: \`J4mes0n-04/ase-environment\`"
+            echo "- outcome_id: \`$OUTCOME_ID\`"
+            echo "- artifact_path: \`$ARTIFACT_PATH\`"
+          } > /tmp/cross-repo-issue.md
+          gh issue create --repo "J4mes0n-04/ase-environment" --title "[pde-ready] $OUTCOME_ID" --body-file /tmp/cross-repo-issue.md

@@ -14,7 +14,9 @@ $requiredFiles = @(
     '.github/workflows/validate-repository.yml',
     '.github/workflows/validate-pack.yml',
     '.github/workflows/validate-evidence.yml',
-    '.github/workflows/governance-change-control.yml'
+    '.github/workflows/governance-change-control.yml',
+    '.github/workflows/notify-ase-ready.yml',
+    '.github/workflows/listen-qsre-feedback.yml'
 )
 
 foreach ($relativePath in $requiredFiles) {

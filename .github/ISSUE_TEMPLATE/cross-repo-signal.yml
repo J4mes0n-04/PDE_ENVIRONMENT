@@ -1,0 +1,34 @@
+name: Cross-repo signal
+description: Ручное межрепозиторное уведомление без изменения Pack и без merge
+title: "[cross-repo] "
+body:
+  - type: dropdown
+    id: event_type
+    attributes:
+      label: Тип события
+      options:
+        - pde-ready
+        - ase-evidence-ready
+        - qsre-feedback
+    validations:
+      required: true
+  - type: input
+    id: outcome_id
+    attributes:
+      label: Outcome ID
+      description: Например OUT-001
+    validations:
+      required: true
+  - type: input
+    id: source_sha
+    attributes:
+      label: Полный commit SHA источника
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Что нужно сделать человеку
+      description: Автоматизация не принимает решение и не объединяет Pull Request.
+    validations:
+      required: true

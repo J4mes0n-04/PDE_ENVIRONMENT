@@ -405,7 +405,9 @@ templates/release-plan.md
 
 ### Unit 4: Shared CI interfaces
 
-Создаются новые reusable workflows и общие validators. Текущие PDE workflows не удаляются до успешного shadow-периода.
+В `engineering-control` подготовлены reusable workflows `validate-pde.yml`, `validate-ase.yml`, `validate-qsre.yml` и `notify-peer.yml`. Они ещё не входят в pin `v1.0.0-rc.1`. Текущие PDE workflows не удаляются до успешного shadow-периода. Среды вызывают общие workflows только после отдельного обновления tag/SHA.
+
+Межрепозиторные события на первом шаге создают Issue. Автоматический merge, изменение Pack и Ready-решение запрещены. Ограниченный GitHub App описывается в `engineering-control/docs/github-app.md`.
 
 ### Unit 5: Environment references
 

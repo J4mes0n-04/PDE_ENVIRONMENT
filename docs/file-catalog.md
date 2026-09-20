@@ -38,10 +38,13 @@
 - `.github/ISSUE_TEMPLATE/config.yml` — запрещает неструктурированные blank issues.
 - `.github/ISSUE_TEMPLATE/outcome.yml` — форма создания Outcome.
 - `.github/ISSUE_TEMPLATE/definition-change.yml` — форма изменения Pack baseline.
+- `.github/ISSUE_TEMPLATE/cross-repo-signal.yml` — ручное межрепозиторное уведомление без merge и без изменения Pack.
 - `.github/workflows/validate-repository.yml` — целостность структуры и doctor.
 - `.github/workflows/validate-pack.yml` — проверка Pack по schema и согласованности Markdown/JSON.
 - `.github/workflows/validate-evidence.yml` — проверка покрытия AC/NFR Evidence Bundle.
 - `.github/workflows/governance-change-control.yml` — отдельный gate причины и влияния изменения governance.
+- `.github/workflows/notify-ase-ready.yml` — ручное уведомление ASE о PDE Ready; создаёт Issue и не объединяет Pull Request.
+- `.github/workflows/listen-qsre-feedback.yml` — локальное Issue по обратной связи QSRE.
 
 ## Управление возможностями
 

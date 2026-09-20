@@ -12,7 +12,18 @@
 
 ## Секреты
 
-Текущие четыре workflow не требуют секретов. Токен Redmine, токен Unleash, учётные данные OTLP и другие секреты добавляются только вместе с включением соответствующей интеграции.
+Локальные четыре validate/governance workflow не требуют секретов. Межрепозиторные уведомления используют GitHub Environment `notify-ase` и секреты `ASE_NOTIFY_APP_ID` / `ASE_NOTIFY_APP_PRIVATE_KEY`. Токен Redmine, токен Unleash, учётные данные OTLP и другие секреты добавляются только вместе с включением соответствующей интеграции. Секреты в Git не хранятся.
+
+## Межрепозиторные уведомления
+
+Пока reusable workflows в `engineering-control` не закреплены новым SHA, PDE запускает только ручные workflow:
+
+- `notify-ase-ready.yml` — создаёт Issue в `ase-environment` после ручной проверки Ready;
+- `listen-qsre-feedback.yml` — создаёт Issue в PDE по обратной связи QSRE.
+
+Автоматизация не объединяет Pull Request, не меняет Pack и не принимает Ready-решение. `repository_dispatch` не используется, потому что GitHub требует для него `contents: write`. Порядок настройки GitHub App описан в репозитории `engineering-control` в `docs/github-app.md`.
+
+Локальные четыре validate workflow остаются обязательными checks. Вызов `validate-pde.yml` из `engineering-control` подключается отдельным изменением после появления SHA, в котором этот файл уже есть.
 
 ## Рекомендуемые метки
 

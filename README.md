@@ -85,7 +85,7 @@ Set-Location PDE_ENVIRONMENT
 - `.agents/skills/` — пять начальных skills PDE.
 - `.cursor/rules/` — короткие правила, автоматически применяемые Cursor.
 - `.codex/config.toml` — безопасная проектная конфигурация Codex; OpenSpace объявлен, но выключен.
-- `.github/workflows/` — четыре базовых workflow GitHub Actions.
+- `.github/workflows/` — локальные validate workflow и ручные уведомления PDE Ready / QSRE feedback.
 - `scripts/` — локальные проверки, используемые также в CI.
 - `docs/file-catalog.md` — назначение каждого файла репозитория.
 

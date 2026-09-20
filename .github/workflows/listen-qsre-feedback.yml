@@ -1,0 +1,50 @@
+name: Listen for QSRE feedback
+
+on:
+  workflow_dispatch:
+    inputs:
+      outcome_id:
+        description: Идентификатор Outcome
+        required: true
+        type: string
+      summary:
+        description: Текст обратной связи QSRE
+        required: true
+        type: string
+      source_sha:
+        description: Полный commit SHA источника
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  open-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create local notification issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OUTCOME_ID: ${{ inputs.outcome_id }}
+          SUMMARY: ${{ inputs.summary }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          set -euo pipefail
+          if ! echo "$SOURCE_SHA" | grep -Eq '^[0-9a-fA-F]{40}$'; then
+            echo "source_sha должен быть полным 40-символьным SHA."
+            exit 1
+          fi
+          {
+            echo "$SUMMARY"
+            echo
+            echo "---"
+            echo
+            echo "Это уведомление. Оно не меняет Pack и не объединяет Pull Request. Решение принимает человек."
+            echo
+            echo "- event_type: \`qsre-feedback\`"
+            echo "- outcome_id: \`$OUTCOME_ID\`"
+            echo "- source_sha: \`$SOURCE_SHA\`"
+          } > /tmp/cross-repo-issue.md
+          gh issue create --title "[qsre-feedback] $OUTCOME_ID" --body-file /tmp/cross-repo-issue.md
