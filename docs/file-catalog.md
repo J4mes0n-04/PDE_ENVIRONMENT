@@ -58,6 +58,7 @@
 - `architecture/repository-layout.md` — разделение платформы и рабочих проектов; односторонняя граница: платформа влияет на `workspaces/`, работа в `workspaces/` не изменяет платформу.
 - `architecture/pde-ase-qsre-flow.md` — прямой и обратный поток PDE–ASE–QSRE.
 - `architecture/toolchain-and-feature-flags.md` — роли инструментов и правила их включения.
+- `architecture/repository-separation-plan.md` — инвентаризация файлов, внутренних зависимостей и безопасных миграционных единиц перед разделением PDE, общей нормативной основы, ASE и QSRE.
 
 ## Нормативные документы
 
