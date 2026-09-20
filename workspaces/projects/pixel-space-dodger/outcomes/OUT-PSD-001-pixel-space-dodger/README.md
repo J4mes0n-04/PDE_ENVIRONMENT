@@ -1,0 +1,13 @@
+# OUT-PSD-001 — пиксельная игра «Космический уклон»
+
+Outcome для тестового пилота PDE → ASE → QSRE.
+
+| Артефакт | Путь |
+| --- | --- |
+| Pack (человек) | [pack.md](pack.md) |
+| Pack (машина) | [pack.json](pack.json) |
+| Передача ASE | [ase-handoff.md](ase-handoff.md) |
+| Изменение определения | [definition-change.md](definition-change.md) |
+| Входной brief | [../../task-brief.md](../../task-brief.md) |
+
+Статус: `ready` / `baseline`, версия `1.0.0`, риск `R1`, автономия `A1`. Критерии: `AC-001`…`AC-030`. SHA Pack вписать после коммита в Git.

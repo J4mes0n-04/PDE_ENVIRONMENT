@@ -155,3 +155,11 @@
 - `workspaces/examples/DEMO-001-device-offline-alert/ase-handoff.md` — пример передачи в ASE.
 - `workspaces/examples/DEMO-001-device-offline-alert/qsre-feedback.md` — пример обратного сигнала QSRE.
 - `workspaces/examples/DEMO-001-device-offline-alert/outcome-check.md` — заполненный вердикт `keep`.
+- `workspaces/projects/pixel-space-dodger/README.md` — обзор тестового проекта пиксельной космической аркады.
+- `workspaces/projects/pixel-space-dodger/task-brief.md` — входное тестовое описание игры: корабль, астероиды, автострельба, меню и рекорды.
+- `workspaces/projects/pixel-space-dodger/outcomes/README.md` — правило размещения отдельных Outcomes проекта.
+- `workspaces/projects/pixel-space-dodger/outcomes/OUT-PSD-001-pixel-space-dodger/README.md` — индекс Outcome OUT-PSD-001.
+- `workspaces/projects/pixel-space-dodger/outcomes/OUT-PSD-001-pixel-space-dodger/pack.md` — человекочитаемый Mini Pack OUT-PSD-001 версии 1.0.0.
+- `workspaces/projects/pixel-space-dodger/outcomes/OUT-PSD-001-pixel-space-dodger/pack.json` — машиночитаемый Mini Pack OUT-PSD-001 версии 1.0.0.
+- `workspaces/projects/pixel-space-dodger/outcomes/OUT-PSD-001-pixel-space-dodger/ase-handoff.md` — передача OUT-PSD-001 в ASE.
+- `workspaces/projects/pixel-space-dodger/outcomes/OUT-PSD-001-pixel-space-dodger/definition-change.md` — DC-001 расширение критериев AC-008…AC-030.
