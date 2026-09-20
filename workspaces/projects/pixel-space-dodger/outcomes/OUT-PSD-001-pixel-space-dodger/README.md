@@ -7,7 +7,8 @@ Outcome для тестового пилота PDE → ASE → QSRE.
 | Pack (человек) | [pack.md](pack.md) |
 | Pack (машина) | [pack.json](pack.json) |
 | Передача ASE | [ase-handoff.md](ase-handoff.md) |
-| Изменение определения | [definition-change.md](definition-change.md) |
+| Изменение определения DC-001 | [definition-change.md](definition-change.md) |
+| Изменение определения DC-002 | [definition-change-dc-002.md](definition-change-dc-002.md) |
 | Входной brief | [../../task-brief.md](../../task-brief.md) |
 
-Статус: `ready` / `baseline`, версия `1.0.0`, риск `R1`, автономия `A1`. Критерии: `AC-001`…`AC-030`. SHA Pack: `5fa996cf140a65109af3ccebd3848e1d7566745d`.
+Статус: `ready` / `baseline`, версия `1.1.0`, риск `R1`, автономия `A1`. Критерии: `AC-001`…`AC-038`. SHA Pack `1.1.0` заполняется после commit; SHA `5fa996cf140a65109af3ccebd3848e1d7566745d` относится к `1.0.0`.
