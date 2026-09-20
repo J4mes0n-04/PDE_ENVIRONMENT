@@ -7,7 +7,7 @@
 - Риск / автономия: `R1 / A1`
 - Контакт PDE: PDE Owner
 - Владелец функции ASE: назначается при приёме handoff
-- SHA Pack: ожидает commit версии `1.1.0`; SHA `5fa996cf140a65109af3ccebd3848e1d7566745d` относится только к `1.0.0`
+- SHA Pack: `023be4aedeea48340a20728f1d504a3d9e3ac628`
 - Источник: `workspaces/projects/pixel-space-dodger/task-brief.md`
 - Изменение определения: `DC-002`
 
@@ -66,4 +66,4 @@ ASE **не может** без Definition Change:
 - `Q-001`: имя внешнего репозитория — неблокирующий.
 - `Q-002`: Ready Review — закрыт решением владельца `ready` (2026-09-20); `DC-002` повторно `ready` (2026-09-21).
 
-Проверка QSRE `REV-PSD-001` по Pack `1.0.0` не закрывает этот handoff. После фиксации Pack `1.1.0` в Git впишите полный SHA в это поле и отправьте handoff. Статус `committed` — только после ACK ASE.
+Проверка QSRE `REV-PSD-001` по Pack `1.0.0` не закрывает этот handoff. SHA Pack `1.1.0`: `023be4aedeea48340a20728f1d504a3d9e3ac628`. Статус `committed` — только после ACK ASE.

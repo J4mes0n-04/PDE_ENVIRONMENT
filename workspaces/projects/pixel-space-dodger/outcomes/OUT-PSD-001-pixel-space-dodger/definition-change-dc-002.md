@@ -39,4 +39,4 @@
 
 ## Применение
 
-Pack, brief и ASE handoff обновлены до версии `1.1.0` 2026-09-21. SHA Pack заполняется после commit. Доказательства QSRE `REV-PSD-001` по мгновенному Game Over не закрывают новый baseline.
+Pack, brief и ASE handoff обновлены до версии `1.1.0` 2026-09-21. SHA Pack: `023be4aedeea48340a20728f1d504a3d9e3ac628`. Доказательства QSRE `REV-PSD-001` по мгновенному Game Over не закрывают новый baseline.
