@@ -701,9 +701,7 @@ pwsh ./scripts/validate-control.ps1
 
 [GitHub — qsre-environment](https://github.com/J4mes0n-04/qsre-environment)
 
-Локальный путь:
-
-[qsre-environment](C:/Users/maksim/Documents/ChatGPT/PDE(home\)/qsre-environment)
+Локальный путь на рабочей машине владельца: каталог `qsre-environment` рядом с `PROD` и `engineering-control`. В репозитории хранится только ссылка на GitHub.
 
 Создано:
 
