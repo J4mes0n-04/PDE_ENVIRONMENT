@@ -163,3 +163,4 @@
 - `workspaces/projects/pixel-space-dodger/outcomes/OUT-PSD-001-pixel-space-dodger/pack.json` — машиночитаемый Mini Pack OUT-PSD-001 версии 1.0.0.
 - `workspaces/projects/pixel-space-dodger/outcomes/OUT-PSD-001-pixel-space-dodger/ase-handoff.md` — передача OUT-PSD-001 в ASE.
 - `workspaces/projects/pixel-space-dodger/outcomes/OUT-PSD-001-pixel-space-dodger/definition-change.md` — DC-001 расширение критериев AC-008…AC-030.
+- `workspaces/projects/pixel-space-dodger/outcomes/OUT-PSD-001-pixel-space-dodger/definition-change-dc-002.md` — DC-002 жизни, силуэт корабля и спавн врагов за краем поля.
