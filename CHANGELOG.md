@@ -11,3 +11,4 @@
 - OpenSpace подготовлен как выключенная локальная интеграция без облачного обмена.
 - Unleash, OpenTelemetry и Grafana подготовлены как выключенные опциональные интеграции.
 - Демонстрационный Outcome изолирован в `workspaces/examples/`.
+- Зафиксирован внешний каркас ASE: https://github.com/J4mes0n-04/ase-environment.git. QSRE как отдельная среда ещё не создана.
