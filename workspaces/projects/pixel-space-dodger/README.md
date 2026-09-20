@@ -9,4 +9,4 @@
 
 ## Статус
 
-Pack `1.0.0`: `ready` / `baseline`, риск `R1`, автономия `A1`, стек JS в отдельном окне, звук вне первого среза. Ready Review закрыт. Для передачи ASE нужен commit SHA Pack.
+Pack `1.0.0`: `ready` / `baseline`, риск `R1`, автономия `A1`, стек JS в отдельном окне, звук вне первого среза. Ready Review закрыт. SHA Pack: `5fa996cf140a65109af3ccebd3848e1d7566745d`.

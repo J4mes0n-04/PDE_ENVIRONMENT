@@ -7,7 +7,7 @@
 - Риск / автономия: `R1 / A1`
 - Контакт PDE: PDE Owner
 - Владелец функции ASE: назначается при приёме handoff
-- SHA Pack: указать полный 40-символьный commit после фиксации Pack в Git
+- SHA Pack: `5fa996cf140a65109af3ccebd3848e1d7566745d`
 - Источник: `workspaces/projects/pixel-space-dodger/task-brief.md`
 - Изменение определения: `DC-001`
 
