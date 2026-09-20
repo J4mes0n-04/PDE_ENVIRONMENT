@@ -450,3 +450,5 @@ PDE получает `config/control-plane.yaml` только после вып�
 Статус копии: `staging`, `authoritative: false`. Каталог `governance/` в PDE остаётся единственным нормативным источником истины. PDE-specific templates, workflows, skills и `governance/` в PDE не удалялись и не заменялись.
 
 Следующий шаг — проверка snapshot. Units 4–5 и cutover не начинать до отдельного подтверждения.
+
+Отдельный план будущего удаления дубликатов governance из PDE без удаления файлов сейчас: [governance-duplicate-removal-plan.md](governance-duplicate-removal-plan.md). Период параллельной проверки: [../operations/parallel-stabilization-period.md](../operations/parallel-stabilization-period.md).

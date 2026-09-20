@@ -28,8 +28,8 @@ ASE и QSRE пока не развёрнуты как отдельные сре�
 Склонируйте репозиторий и перейдите в его корень:
 
 ```powershell
-git clone https://github.com/J4mes0n-04/PDE_ENVIRONMENT.git
-Set-Location PDE_ENVIRONMENT
+git clone https://github.com/J4mes0n-04/pde-environment.git
+Set-Location pde-environment
 ```
 
 Все команды ниже выполняются из корня репозитория.

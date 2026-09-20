@@ -23,3 +23,7 @@
 ## Scale decision
 
 Масштабировать только при улучшении flow/acceptance без ухудшения defects, безопасности и результата Outcome.
+
+## Stage parallel stabilization
+
+До удаления локальных дубликатов governance провести период параллельной работы по [parallel-stabilization-period.md](parallel-stabilization-period.md). План будущего удаления — только в [governance-duplicate-removal-plan.md](../architecture/governance-duplicate-removal-plan.md); execution PR не открывать до выхода из периода.

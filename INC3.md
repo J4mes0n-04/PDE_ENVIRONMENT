@@ -865,3 +865,17 @@ QSRE Feedback
 3. Отдельные PR в PDE, ASE и QSRE с notify/listen workflows; в ASE не смешивать это с уже незакоммиченной работой Codex.
 4. Создать три GitHub App и Environments `notify-ase`, `notify-qsre`, `notify-pde`.
 5. Проверить ручной `workflow_dispatch`, затем shadow-pin PDE и сквозной pilot. Cutover не начинать.
+
+---
+
+## Этап 10 начат — 2026-09-20
+
+Сделано без удаления файлов из `PROD`:
+
+1. Оформлен период параллельной работы: `operations/parallel-stabilization-period.md`.
+2. Зафиксирована базовая проверка: pins ASE/QSRE и теги восстановления в порядке; PDE shadow pin и три полных цикла ещё не закрыты.
+3. Составлен отдельный план удаления дубликатов: `architecture/governance-duplicate-removal-plan.md` со списками путей, новыми местами, ссылками на историю, откатом и обязательными полями будущего PR.
+4. Убраны устаревшие записи catalog про отсутствующий `av-control-business` и обновлён clone URL README на `pde-environment`.
+5. `governance/` в PDE **не удалялся** и не объявлялся заменённым.
+
+Выход из этапа 10 и execution PR удаления запрещены, пока не выполнены критерии выхода из периода параллельной работы.

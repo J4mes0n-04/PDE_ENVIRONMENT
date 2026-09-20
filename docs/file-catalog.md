@@ -66,6 +66,7 @@
 - `architecture/pde-ase-qsre-flow.md` — прямой и обратный поток PDE–ASE–QSRE.
 - `architecture/toolchain-and-feature-flags.md` — роли инструментов и правила их включения.
 - `architecture/repository-separation-plan.md` — инвентаризация файлов, внутренних зависимостей и безопасных миграционных единиц перед разделением PDE, общей нормативной основы, ASE и QSRE.
+- `architecture/governance-duplicate-removal-plan.md` — отдельный план будущего удаления дубликатов governance из PDE; до выхода из периода параллельной работы файлы не удаляются.
 
 ## Нормативные документы
 
@@ -99,6 +100,7 @@
 - `operations/activation-runbook.md` — безопасное включение опциональных интеграций.
 - `operations/maintenance-calendar.md` — регулярные reviews и обслуживание.
 - `operations/environment-definition-of-done.md` — проверяемая готовность самой среды.
+- `operations/parallel-stabilization-period.md` — период параллельной работы PDE/control/ASE/QSRE, чеклист циклов и критерии выхода до удаления дубликатов.
 
 ## Интеграции
 
@@ -153,15 +155,3 @@
 - `workspaces/examples/DEMO-001-device-offline-alert/ase-handoff.md` — пример передачи в ASE.
 - `workspaces/examples/DEMO-001-device-offline-alert/qsre-feedback.md` — пример обратного сигнала QSRE.
 - `workspaces/examples/DEMO-001-device-offline-alert/outcome-check.md` — заполненный вердикт `keep`.
-- `workspaces/projects/av-control-business/README.md` — обзор рабочего проекта AV Control и его текущего результата.
-- `workspaces/projects/av-control-business/app/README.md` — инструкция запуска web-прототипа AV Control.
-- `workspaces/projects/av-control-business/app/index.html` — точка входа web-прототипа.
-- `workspaces/projects/av-control-business/app/app.js` — клиентская логика регистрации и управления подключениями устройств.
-- `workspaces/projects/av-control-business/app/styles.css` — стили тёмного интерфейса web-прототипа.
-- `workspaces/projects/av-control-business/app/favicon.svg` — векторный значок web-прототипа.
-- `workspaces/projects/av-control-business/outcomes/OUT-AVC-001-web-device-connections/business-requirements.md` — бизнес-требования к регистрации и управлению подключениями устройств.
-- `workspaces/projects/av-control-business/outcomes/OUT-AVC-001-web-device-connections/pack.md` — человекочитаемый Pack результата OUT-AVC-001.
-- `workspaces/projects/av-control-business/outcomes/OUT-AVC-001-web-device-connections/pack.json` — машиночитаемая запись Pack результата OUT-AVC-001.
-- `workspaces/projects/av-control-business/outcomes/OUT-AVC-001-web-device-connections/ase-handoff.md` — контракт передачи результата OUT-AVC-001 в ASE.
-- `workspaces/projects/av-control-business/outcomes/OUT-AVC-001-web-device-connections/implementation-evidence.md` — текущие доказательства реализации прототипа.
-- `workspaces/projects/av-control-business/outcomes/OUT-AVC-001-web-device-connections/prototype-decision-record.md` — журнал решений по web-прототипу.

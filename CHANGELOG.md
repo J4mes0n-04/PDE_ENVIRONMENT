@@ -13,3 +13,5 @@
 - Демонстрационный Outcome изолирован в `workspaces/examples/`.
 - Зафиксирован внешний каркас ASE: https://github.com/J4mes0n-04/ase-environment.git. QSRE как отдельная среда ещё не создана.
 - Добавлены ручные межрепозиторные уведомления `notify-ase-ready` и `listen-qsre-feedback`: создаётся Issue, Pack и Pull Request не изменяются.
+- Зафиксирован внешний каркас QSRE: https://github.com/J4mes0n-04/qsre-environment.git.
+- Добавлены период параллельной работы и отдельный план удаления дубликатов governance без удаления файлов из PDE.
