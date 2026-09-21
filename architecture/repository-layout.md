@@ -34,4 +34,4 @@ PROD/
 
 ## Правило зависимостей
 
-Нормы направляют templates, rules, skills и CI. Исполняемые файлы могут ссылаться на governance, но governance не должен зависеть от поведения конкретного инструмента. Это позволяет отключить Cursor, Codex, OpenSpace, Unleash или observability без потери определения процесса.
+Нормы направляют templates, rules, skills и CI. Исполняемые файлы могут ссылаться на governance, но governance не должен зависеть от поведения конкретного инструмента. Это позволяет отключить Cursor, Codex, OpenSpace, OpenSpec, Unleash или observability без потери определения процесса.

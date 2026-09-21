@@ -3,11 +3,12 @@
 ## Прямой поток
 
 1. PDE получает Signal и формирует Outcome.
-2. PDE создаёт Pack, критерии приёмки, NFR, риск и план измерения.
-3. Ready Review подтверждает, что определение пригодно для реализации.
-4. PDE создаёт `ase-handoff.md` и передаёт стабильную версию Pack по commit SHA.
-5. ASE реализует Delivery Slice и возвращает Pull Request, технические решения и evidence.
-6. QSRE проверяет evidence, качество, безопасность, совместимость и release readiness.
+2. Если включён OpenSpec intake, PDE разбирает требования в `openspec/changes/<change-id>/` и только затем переносит AC/NFR в Pack.
+3. PDE создаёт Pack, критерии приёмки, NFR, риск и план измерения.
+4. Ready Review подтверждает, что определение пригодно для реализации.
+5. PDE создаёт `ase-handoff.md` и передаёт стабильную версию Pack по commit SHA.
+6. ASE реализует Delivery Slice и возвращает Pull Request, технические решения и evidence.
+7. QSRE проверяет evidence, качество, безопасность, совместимость и release readiness.
 
 ## Обратный поток
 

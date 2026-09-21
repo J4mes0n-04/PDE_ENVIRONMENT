@@ -7,18 +7,21 @@ description: Создаёт или существенно обновляет Pro
 
 ## Required context
 
-Прочитайте `governance/07-pack-standard.md`, `05-risk-model.md`, `14-outcome-measurement.md` и подходящий шаблон Pack.
+Прочитайте `governance/07-pack-standard.md`, `05-risk-model.md`, `14-outcome-measurement.md`, подходящий шаблон Pack и `integrations/openspec/pack-mapping.yaml`.
 
 ## Workflow
 
-1. Установите Signal, пользователя, проблему и evidence проблемы. Не превращайте предположение в факт.
-2. Сформулируйте измеримый Outcome, baseline, target, источник, validation window и decision rule.
-3. Определите in/out scope, сценарии, ошибки и recovery behavior.
-4. Назначьте R0–R3 независимо от уровня автономии A0–A3.
-5. Запишите проверяемые `AC-###` и `NFR-###`; каждому назначьте ожидаемый вид evidence.
-6. Опишите зависимости, открытые вопросы, rollout, stop conditions и rollback.
-7. Создайте согласованные `pack.md` и `pack.json` в Outcome folder.
-8. Запустите `pwsh ./scripts/validate-pack.ps1 -Path <outcome-folder>`.
+1. Если `openspec_intake.enabled: true` и Outcome ещё не существует, сначала выполните `pde-intake-openspec`. Не создавайте Pack без change, кроме явно разрешённого черновика после зафиксированного change.
+2. Прочитайте `workspaces/projects/<project-id>/openspec/changes/<change-id>/` и перенесите proposal/specs/design в Pack по `pack-mapping.yaml`. Идентификаторы `AC-###` и `NFR-###` сохраняйте.
+3. Установите Signal, пользователя, проблему и evidence проблемы. Не превращайте предположение в факт.
+4. Сформулируйте измеримый Outcome, baseline, target, источник, validation window и decision rule.
+5. Определите in/out scope, сценарии, ошибки и recovery behavior.
+6. Назначьте R0–R3 независимо от уровня автономии A0–A3.
+7. Запишите проверяемые `AC-###` и `NFR-###`; каждому назначьте ожидаемый вид evidence.
+8. Опишите зависимости, открытые вопросы, rollout, stop conditions и rollback.
+9. Создайте согласованные `pack.md` и `pack.json` в Outcome folder и скопируйте шаблоны спецификаций при необходимости.
+10. Запустите `pwsh ./scripts/map-openspec-to-pack.ps1 -ProjectPath workspaces/projects/<project-id> -ChangeName <change-id> -OutcomePath <outcome-folder>`.
+11. Запустите `pwsh ./scripts/validate-pack.ps1 -Path <outcome-folder>`.
 
 ## Output
 

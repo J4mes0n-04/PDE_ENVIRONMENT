@@ -8,6 +8,10 @@ GitHub, GitHub Actions и Redmine образуют минимальный раб
 
 OpenSpace подключается локально через MCP. Он читает `.agents/skills`, создаёт локальные quality records и предложения эволюции. Облачные функции и телеметрия выключены. Источником истины для принятой версии skill остаётся Git.
 
+## OpenSpec
+
+OpenSpec — опциональный intake перед Outcome. CLI и репозиторий инструмента живут вне `workspaces/`. Рабочие change-файлы создаются только в `workspaces/projects/<project-id>/openspec/`. Pack остаётся единственным источником истины для gates. Телеметрия OpenSpec выключена. Реализация кода через `/opsx:apply` в PDE запрещена.
+
 ## Unleash
 
 Unleash не требуется для запуска среды. Он включается, когда команда действительно использует feature flags для контролируемого rollout и rollback. До этого release plan описывает доступный механизм управления выпуском.

@@ -7,6 +7,7 @@
 3. Запустить `pwsh ./scripts/doctor.ps1`.
 4. Открыть демонстрационный Outcome и сопоставить `pack.md` с `pack.json`.
 5. Запустить проверки Pack и Evidence.
+6. Для нового Outcome из входных документов просмотреть `integrations/openspec/README.md` и эталон `fixtures/sample-project`.
 
 ## Первый день
 

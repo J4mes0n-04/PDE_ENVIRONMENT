@@ -4,4 +4,5 @@
 /.github/ @your-org/pde-platform
 /.agents/skills/ @your-org/pde-skills
 /integrations/openspace/ @your-org/pde-platform @your-org/security
+/integrations/openspec/ @your-org/pde-platform
 /workspaces/projects/ @your-org/pde-product

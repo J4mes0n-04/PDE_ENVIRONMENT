@@ -22,6 +22,11 @@ features:
     required: false
     cloud_mode: off
     activation_stage: pilot-shadow
+  openspec_intake:
+    enabled: true
+    required: false
+    telemetry: off
+    activation_stage: intake-before-outcome
   unleash:
     enabled: false
     required: false

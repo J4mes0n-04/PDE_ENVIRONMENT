@@ -5,6 +5,7 @@
 - `github/` — repository settings, branch protection и Actions.
 - `redmine/` — поток и mapping полей.
 - `openspace/` — локальное управление skills через MCP.
+- `openspec/` — разбор бизнес-требований до создания Pack.
 - `ase/` — будущая среда реализации.
 - `qsre/` — будущая среда качества, безопасности и выпуска.
 - `unleash/` — опциональное управление rollout.

@@ -1,0 +1,12 @@
+---
+description: OpenSpec разбирает бизнес-требования до создания Outcome Pack
+alwaysApply: true
+---
+
+# OpenSpec до Outcome
+
+- Если `config/features.yaml` задаёт `openspec_intake.enabled: true` и пользователь просит создать Outcome или Pack из бизнес-требований, сначала выполните skill `pde-intake-openspec`.
+- Не создавайте `pack.md` / `pack.json`, пока нет change в `workspaces/projects/<project-id>/openspec/changes/<change-id>/` с delta specs и идентификаторами `AC-###` / `NFR-###`, либо пока пользователь явно не разрешил черновик Pack после зафиксированного change.
+- Исключение: уже существующие Pack без OpenSpec не переписывать задним числом и не требовать ретроспективный change для baseline.
+- Рабочие файлы OpenSpec только в `workspaces/projects/<project-id>/openspec/`. Не вызывайте `openspec init` в корне репозитория и не подключайте `--tools cursor`.
+- Не запускайте реализацию, `/opsx:apply` и `openspec archive` из PDE. После утверждённого change используйте `pde-create-pack`.

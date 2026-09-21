@@ -65,7 +65,7 @@ Set-Location pde-environment
 
 Обязательное ядро работает без Unleash, OpenTelemetry, Grafana и OpenSpace. Состояние интеграций задаётся в `config/features.yaml`.
 
-- `core` — Git, GitHub Actions, Redmine, Cursor/Codex, Pack и Evidence.
+- `core` — Git, GitHub Actions, Redmine, Cursor/Codex, Pack и Evidence. OpenSpec intake может быть включён без облачного обмена. OpenSpec intake может быть включён без облака.
 - `openspace-local` — добавляется локальный OpenSpace MCP; облачный обмен запрещён.
 - `release-control` — добавляется Unleash.
 - `observability` — добавляются OpenTelemetry и Grafana.
@@ -81,8 +81,8 @@ Set-Location pde-environment
 - `templates/` — шаблоны рабочих артефактов.
 - `schemas/` — машиночитаемые схемы. Текущая строгая JSON Schema Pack v2 разделяет `outcome_state` и `pack_status`, запрещает неизвестные поля и проверяет условия риска, Ready, release, Evidence Bundle, telemetry, test plan и threat analysis.
 - `workspaces/` — единственное место для проектов, Outcome и Evidence конкретной работы. Платформа влияет на `workspaces/`; работа в `workspaces/` не изменяет платформу. Реальные проекты только в `workspaces/projects/`.
-- `integrations/` — отключаемые адаптеры GitHub, Redmine, OpenSpace, ASE, QSRE, Unleash и observability.
-- `.agents/skills/` — пять начальных skills PDE.
+- `integrations/` — отключаемые адаптеры GitHub, Redmine, OpenSpace, OpenSpec, ASE, QSRE, Unleash и observability.
+- `.agents/skills/` — шесть начальных skills PDE, включая OpenSpec intake.
 - `.cursor/rules/` — короткие правила, автоматически применяемые Cursor.
 - `.codex/config.toml` — безопасная проектная конфигурация Codex; OpenSpace объявлен, но выключен.
 - `.github/workflows/` — локальные validate workflow и ручные уведомления PDE Ready / QSRE feedback.

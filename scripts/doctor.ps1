@@ -39,14 +39,18 @@ foreach ($commandName in @('git', 'pwsh')) {
 }
 
 $featureText = Get-Content -Raw -LiteralPath (Join-Path $repoRoot 'config/features.yaml')
-foreach ($feature in @('openspace_local', 'unleash', 'opentelemetry', 'grafana')) {
+foreach ($feature in @('openspace_local', 'openspec_intake', 'unleash', 'opentelemetry', 'grafana')) {
     if ($featureText -notmatch "(?m)^  ${feature}:") {
         $failures.Add("Feature declaration is missing: $feature")
     }
 }
 
-if ($featureText -notmatch '(?m)^  allow_openspace_cloud: false$') {
+if ($featureText -notmatch '(?m)^  allow_openspace_cloud:\s*false\s*$') {
     $failures.Add('OpenSpace cloud must remain disabled in the base package.')
+}
+
+if ($featureText -notmatch '(?m)^  openspec_intake:\s*$' -or $featureText -notmatch '(?m)^    telemetry:\s*off\s*$') {
+    $failures.Add('OpenSpec intake must be declared and keep telemetry off.')
 }
 
 if ($failures.Count -gt 0) {

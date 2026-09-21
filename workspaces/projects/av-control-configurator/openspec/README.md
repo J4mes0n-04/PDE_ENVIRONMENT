@@ -1,0 +1,9 @@
+# OpenSpec в проекте PDE
+
+Каталог хранит разбор бизнес-требований **до** создания Outcome.
+
+- `changes/` — один change на один будущий Outcome. Сейчас: `changes/chg-001-web-configurator`.
+- `specs/` — текущее поведение продукта после выпуска; до release не заполняется из незавершённого change.
+- Pack создаётся только в `outcomes/<outcome-id>/` после подтверждения change. Текущий черновик: `../outcomes/OUT-CFG-001-web-configurator/`.
+
+Не запускайте реализацию и `openspec archive` из этого каталога.

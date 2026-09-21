@@ -1,0 +1,53 @@
+schema_version: 1
+tool: openspec
+tool_version_pin: "1.13.1"
+role: intake-before-outcome
+
+invariants:
+  - Pack remains the only gate source of truth.
+  - One OpenSpec change maps to one Outcome.
+  - OpenSpec apply and code generation are out of PDE scope.
+  - Human-readable Pack text stays Russian; OpenSpec structural headings stay English.
+
+paths:
+  project_openspec: workspaces/projects/<project-id>/openspec
+  change: workspaces/projects/<project-id>/openspec/changes/<change-id>
+  outcome: workspaces/projects/<project-id>/outcomes/<outcome-id>
+  specifications: workspaces/projects/<project-id>/outcomes/<outcome-id>/specifications.md
+  traceability: workspaces/projects/<project-id>/outcomes/<outcome-id>/openspec-traceability.md
+
+mapping:
+  - from: proposal.md#why
+    to: pack.md#Проблема
+    json: problem.summary
+  - from: proposal.md#what
+    to: pack.md#Целевой результат
+    json: outcome.statement
+  - from: proposal.md#scope
+    to: pack.md#Область действия
+    json: scope.in
+  - from: proposal.md#non-goals
+    to: pack.md#Не входит в область действия
+    json: scope.out
+  - from: proposal.md#open-questions
+    to: pack.md#Открытые вопросы
+    json: open_questions
+  - from: specs/**/spec.md#ADDED
+    to: pack.md#Критерии приёмки
+    json: acceptance_criteria
+    id_pattern: "^AC-[0-9]{3,}$"
+  - from: specs/**/spec.md#NFR
+    to: pack.md#Нефункциональные требования
+    json: nfrs
+    id_pattern: "^NFR-[0-9]{3,}$"
+  - from: design.md
+    to: pack.md#Зависимости и допущения
+    json: nfrs
+  - from: tasks.md
+    to: pack.md#Срезы поставки
+    note: Delivery slices only; not a source of truth for gates.
+
+requirement_format:
+  heading: "### Requirement: <AC-NNN|NFR-NNN> <Russian title>"
+  statement: "The system SHALL <Russian observable behavior>."
+  scenario: Given/When/Then under #### Scenario

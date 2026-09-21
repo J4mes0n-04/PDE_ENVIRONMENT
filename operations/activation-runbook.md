@@ -15,6 +15,10 @@
 
 Первый режим только `pilot-shadow`: local search и records. Cloud и auto-evolution запрещены.
 
+## OpenSpec
+
+Включать как intake перед новым Outcome. CLI ставить вне `workspaces/`, инициализировать только проект через `scripts/init-openspec-project.ps1`. Телеметрия и `openspec init` в корне PDE запрещены. Откат — `openspec_intake.enabled: false`.
+
 ## Unleash
 
 Включать вместе с первым реальным staged rollout, а не для демонстрации инструмента.

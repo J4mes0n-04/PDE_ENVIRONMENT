@@ -11,7 +11,8 @@ $requiredPaths = @(
     'governance/19-ase-qsre-interface-contract.md',
     'config/features.yaml', 'schemas/pack.schema.json',
     'workspaces/README.md', 'workspaces/projects/README.md',
-    'integrations/openspace/README.md', '.codex/config.toml'
+    'integrations/openspace/README.md', 'integrations/openspec/README.md',
+    '.codex/config.toml'
 )
 
 foreach ($relativePath in $requiredPaths) {
@@ -153,13 +154,15 @@ $workspaceMarkdownFiles = @(Get-ChildItem -LiteralPath $workspacesRoot -Filter '
 })
 $forbiddenEnglishLabels = '(?im)^\s*-\s*(Outcome ID|Pack type|Outcome state|Pack status|Risk / autonomy|Outcome Owner|PDE Owner|Risk Owner|Evidence owner|Pack version|Pack commit SHA|Release Owner)\s*:'
 foreach ($markdownFile in $workspaceMarkdownFiles) {
-    $relativePath = [IO.Path]::GetRelativePath($repoRoot, $markdownFile.FullName).Replace('\', '/')
+        $relativePath = [IO.Path]::GetRelativePath($repoRoot, $markdownFile.FullName).Replace('\', '/')
     $text = Get-Content -Raw -LiteralPath $markdownFile.FullName
     if ($text -notmatch '[А-Яа-яЁё]') {
         $failures.Add("Workspace document has no Russian human-readable text: $relativePath")
     }
+    $isOpenSpecArtifact = $relativePath -match '/openspec/'
     foreach ($heading in [regex]::Matches($text, '(?m)^#{1,6}\s+(?<title>.+?)\s*$')) {
         $title = $heading.Groups['title'].Value
+        if ($isOpenSpecArtifact) { continue }
         if ($title -match '[A-Za-z]' -and $title -notmatch '[А-Яа-яЁё]') {
             $failures.Add("Workspace heading must be written in Russian: '$title' in $relativePath")
         }
@@ -224,6 +227,17 @@ if ($failures.Count -gt 0) {
 }
 
 Write-Host "Repository structure is valid. Skills found: $($skillFiles.Count)."
+
+$fixtureProject = Join-Path $repoRoot 'integrations/openspec/fixtures/sample-project'
+$fixtureScript = Join-Path $PSScriptRoot 'validate-openspec-change.ps1'
+$pwshCommand = Get-Command pwsh -ErrorAction SilentlyContinue
+if ($pwshCommand) {
+    & $pwshCommand.Source -NoProfile -File $fixtureScript -ProjectPath $fixtureProject -ChangeName 'chg-001-device-status'
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error 'OpenSpec fixture sample-project failed structural validation.'
+        exit 1
+    }
+}
 
 & (Join-Path $PSScriptRoot 'check-links.ps1')
 exit $LASTEXITCODE
