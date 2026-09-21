@@ -27,6 +27,7 @@
 - `.cursor/rules/20-evidence.mdc` — правила качества Evidence Bundle.
 - `.cursor/rules/30-governance-change.mdc` — change control нормативных документов.
 - `.cursor/rules/40-skill-change.mdc` — безопасное изменение skills и OpenSpace proposals.
+- `.cursor/rules/50-platform-memory.mdc` — обязательное чтение и пополнение проверенных уроков платформы.
 - `.agents/skills/pde-create-pack/SKILL.md` — создание согласованных Pack для человека и машины.
 - `.agents/skills/pde-intake-openspec/SKILL.md` — разбор бизнес-требований через OpenSpec до Pack.
 - `.agents/skills/pde-ready-review/SKILL.md` — проверка Ready gate.
@@ -61,6 +62,12 @@
 - `docs/pde-ase-qsre-handoff-flow.png` — слайд со схемой передачи работы и обратной связи между PDE, ASE и QSRE.
 - `docs/target-architecture.png` — целевая архитектура среды PDE и связанных контуров.
 - `docs/pde_ase_qsre_all.png` — сводная схема контуров PDE, ASE и QSRE.
+- `docs/idp-platform-architecture-pde-v2.png` — актуальный слайд архитектуры IDP с потоком PDE → ASE → QSRE → PDE.
+
+## Память платформы
+
+- `memory/README.md` — назначение, границы и индекс памяти PDE.
+- `memory/2026-09-21-av-control-configurator-test.md` — результаты тестирования конфигуратора AV Control и уроки по gates/evidence.
 
 ## Архитектура
 
@@ -213,6 +220,7 @@
 - `workspaces/projects/av-control-configurator/inputs/SRC-CFG-001-sources.md` — указатель исходников Working.
 - `workspaces/projects/av-control-configurator/inputs/BRD-CFG-001-configurator.md` — бизнес-требование на создание конфигуратора по CJM и ценностям.
 - `workspaces/projects/av-control-configurator/inputs/VIS-CFG-001-visual-prohibitions.md` — запреты визуала против шаблона ИИ.
+- `workspaces/projects/av-control-configurator/inputs/BUG-REPORT-CFG-001-configurator.md` — полный отчёт о дефектах продукта, gates и evidence конфигуратора.
 - `workspaces/projects/av-control-configurator/openspec/README.md` — OpenSpec-каталог проекта до Pack.
 - `workspaces/projects/av-control-configurator/openspec/config.yaml` — PDE-правила OpenSpec проекта.
 - `workspaces/projects/av-control-configurator/openspec/specs/README.md` — текущие specs после выпуска, сейчас пусто.
@@ -228,7 +236,9 @@
 - `workspaces/projects/av-control-configurator/openspec/changes/chg-001-web-configurator/specs/hygiene-incomplete/spec.md` — delta AC уборки и неполного железа.
 - `workspaces/projects/av-control-configurator/openspec/changes/chg-001-web-configurator/specs/visual-surface/spec.md` — delta NFR поверхности «К» по VIS-BAN.
 - `workspaces/projects/av-control-configurator/outcomes/README.md` — правило размещения Outcomes проекта.
+- `workspaces/projects/av-control-configurator/openspec/changes/chg-001-web-configurator/specs/defect-recovery/spec.md` — delta AC холста, мастера и дефектов прототипа.
 - `workspaces/projects/av-control-configurator/outcomes/OUT-CFG-001-web-configurator/pack.md` — человекочитаемый Pack веб-конфигуратора.
 - `workspaces/projects/av-control-configurator/outcomes/OUT-CFG-001-web-configurator/pack.json` — машиночитаемый Pack веб-конфигуратора.
 - `workspaces/projects/av-control-configurator/outcomes/OUT-CFG-001-web-configurator/specifications.md` — сценарии OpenSpec, перенесённые в Outcome.
 - `workspaces/projects/av-control-configurator/outcomes/OUT-CFG-001-web-configurator/openspec-traceability.md` — трассировка change на Pack.
+- `workspaces/projects/av-control-configurator/outcomes/OUT-CFG-001-web-configurator/definition-change-dc-001.md` — дополнение Pack 0.2.0 без замены текста 0.1.0.

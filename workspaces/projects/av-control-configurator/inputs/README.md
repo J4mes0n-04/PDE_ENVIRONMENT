@@ -6,4 +6,5 @@
 | --- | --- |
 | [BRD-CFG-001-configurator.md](BRD-CFG-001-configurator.md) | Требование на создание конфигуратора; раздел 9 — ответы intake на `Q-CFG-01`…`Q-CFG-09` |
 | [VIS-CFG-001-visual-prohibitions.md](VIS-CFG-001-visual-prohibitions.md) | Запреты визуала, чтобы интерфейс не выглядел как шаблон ИИ |
+| [BUG-REPORT-CFG-001-configurator.md](BUG-REPORT-CFG-001-configurator.md) | Полный отчёт о продуктовых и процессных дефектах конфигуратора, выявленных 2026-09-21 |
 | [SRC-CFG-001-sources.md](SRC-CFG-001-sources.md) | Пути исходников и что из них взято |
