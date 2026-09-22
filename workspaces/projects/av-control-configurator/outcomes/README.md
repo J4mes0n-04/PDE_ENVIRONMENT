@@ -2,4 +2,5 @@
 
 Каждый целевой результат размещается только в собственном каталоге `OUT-xxx-.../`.
 
-Текущий Outcome: `OUT-CFG-001-web-configurator`. Pack в статусе `draft`, состояние `defined`. Передача ASE не открыта.
+- `OUT-CFG-001-web-configurator` — полный веб-конфигуратор. Pack `draft`, состояние `defined`.
+- `OUT-CFG-002-e1-main-page` — главная страница `Э-1`. Pack `0.1.0`, `draft`, состояние `defined`. Change: `chg-002-e1-main-page`. Передача ASE не открыта.

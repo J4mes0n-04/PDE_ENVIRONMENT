@@ -4,6 +4,8 @@
 
 | Файл | Назначение |
 | --- | --- |
+| [REQ-OS-001-openspec-intake-rules.md](REQ-OS-001-openspec-intake-rules.md) | Полные входные требования OpenSpec в виде правил: JTBD, CJM, ценности, что пользователь может делать |
+| [REQ-OS-002-e1-main-page/](REQ-OS-002-e1-main-page/) | Intake для change `chg-002-e1-main-page`: UI главной страницы `Э-1` (5 частей) |
 | [BRD-CFG-001-configurator.md](BRD-CFG-001-configurator.md) | Требование на создание конфигуратора; раздел 9 — ответы intake на `Q-CFG-01`…`Q-CFG-09` |
 | [VIS-CFG-001-visual-prohibitions.md](VIS-CFG-001-visual-prohibitions.md) | Запреты визуала, чтобы интерфейс не выглядел как шаблон ИИ |
 | [BUG-REPORT-CFG-001-configurator.md](BUG-REPORT-CFG-001-configurator.md) | Полный отчёт о продуктовых и процессных дефектах конфигуратора, выявленных 2026-09-21 |
