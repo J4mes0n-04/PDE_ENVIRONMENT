@@ -12,6 +12,7 @@
 - `INC1.md` — пошаговая программа создания, объединения и вывода сред PDE, ASE, QSRE и общей нормативной основы в production.
 - `INC2.md` — инструкция развёртывания и настройки готового комплекта сред в новом GitHub-контуре или на новой площадке.
 - `INC3.md` — полный контекст программы, принятые решения, текущее состояние и точка продолжения для нового диалога или участника.
+- `settingOpenSpecGPT.md` — подробная инструкция по включению, настройке и безопасному изменению OpenSpec в PDE.
 - `.editorconfig` — единая UTF-8/LF-конфигурация текстовых файлов.
 - `.gitignore` — исключение секретов, локального OpenSpace state и generated reports.
 - `LICENSE` — намеренно отсутствует по решению владельца.
@@ -150,6 +151,7 @@
 - `templates/pack-mini.md` — компактный Pack для R0–R1.
 - `templates/pack-full.md` — расширенный Pack для R2–R3.
 - `templates/pack.json` — машиночитаемый контрольный шаблон Pack.
+- `templates/business-requirements.md` — подробный шаблон входного бизнес-требования для продуктивного OpenSpec intake.
 - `templates/specifications.md` — человекочитаемые сценарии, перенесённые из OpenSpec.
 - `templates/openspec-traceability.md` — таблица соответствия change и Pack.
 - `templates/openspec/README.md` — пояснение каталога OpenSpec внутри проекта.
