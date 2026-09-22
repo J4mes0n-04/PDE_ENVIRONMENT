@@ -125,7 +125,7 @@
 - `integrations/openspec/openspec.env.example` — выключенная телеметрия OpenSpec без секретов.
 - `integrations/openspec/pack-mapping.yaml` — соответствие артефактов OpenSpec полям Pack.
 - `integrations/openspec/fixtures/sample-project/README.md` — описание эталонного разбора intake.
-- `integrations/openspec/fixtures/sample-project/inputs/brd.md` — входное бизнес-требование фикстуры.
+- `integrations/openspec/fixtures/sample-project/inputs/brd.md` — форма входного документа для `inputs`: проблема, пользователь, результат, область, метрики, ограничения, риски и вопросы.
 - `integrations/openspec/fixtures/sample-project/openspec/config.yaml` — OpenSpec config эталона.
 - `integrations/openspec/fixtures/sample-project/openspec/specs/README.md` — пояснение пустых specs фикстуры.
 - `integrations/openspec/fixtures/sample-project/openspec/specs/.gitkeep` — сохранение каталога specs фикстуры.
@@ -149,10 +149,10 @@
 ## Шаблоны и schema
 
 - `templates/pack-mini.md` — компактный Pack для R0–R1.
-- `templates/pack-full.md` — расширенный Pack для R2–R3.
+- `templates/pack-full.md` — полный Pack для R2–R3: подробные сценарии, AC/NFR, ограничения, доказательства, выпуск и границы реализации.
 - `templates/pack.json` — машиночитаемый контрольный шаблон Pack.
 - `templates/business-requirements.md` — подробный шаблон входного бизнес-требования для продуктивного OpenSpec intake.
-- `templates/specifications.md` — человекочитаемые сценарии, перенесённые из OpenSpec.
+- `templates/specifications.md` — человекочитаемые сценарии из OpenSpec: основной путь, ошибка, шаги и видимый результат; gates остаются в `pack.json`.
 - `templates/openspec-traceability.md` — таблица соответствия change и Pack.
 - `templates/openspec/README.md` — пояснение каталога OpenSpec внутри проекта.
 - `templates/openspec/config.yaml` — PDE-контекст и правила артефактов OpenSpec.
@@ -161,16 +161,16 @@
 - `templates/openspec/changes/README.md` — правило один change на один Outcome.
 - `templates/openspec/changes/archive/.gitkeep` — архив завершённых change.
 - `templates/openspec-change/explore.md` — черновик исследования сигнала.
-- `templates/openspec-change/proposal.md` — шаблон предложения change.
+- `templates/openspec-change/proposal.md` — шаблон предложения change: проблема, наблюдаемое поведение, область, вопросы, ограничения и нецели.
 - `templates/openspec-change/design.md` — шаблон проектного решения change.
-- `templates/openspec-change/tasks.md` — срезы поставки для ASE.
+- `templates/openspec-change/tasks.md` — срезы поставки для ASE: отдельные наблюдаемые проверки с AC/NFR, без подмены Pack.
 - `templates/openspec-change/specs/domain/spec.md` — шаблон delta spec с AC/NFR.
 - `templates/definition-change.md` — изменение baseline.
 - `templates/evidence-bundle.md` — индекс доказательств.
-- `templates/outcome-check.md` — результат после validation window.
+- `templates/outcome-check.md` — проверка фактического результата после окна наблюдения: метрика, качество данных, эффекты и один вердикт.
 - `templates/decision-log.md` — журнал решений.
 - `templates/release-plan.md` — rollout, stop conditions и rollback.
-- `templates/ase-handoff.md` — контракт передачи PDE→ASE.
+- `templates/ase-handoff.md` — развёрнутый шаблон передачи PDE→ASE: сценарии, функциональные и нефункциональные требования, ограничения, срезы и доказательства.
 - `templates/qsre-feedback.md` — контракт обратной связи QSRE→PDE.
 - `templates/redmine-outcome.md` — краткая карточка потока без дублирования Pack.
 - `schemas/pack.schema.json` — облегчённая JSON Schema для `pack.json`.

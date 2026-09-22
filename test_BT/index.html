@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AV Control — оболочка и конфигуратор</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="identity">
+        <p class="product">AV Control</p>
+        <div class="contour">
+          <span class="dot" id="contour-dot"></span>
+          <span id="contour-label">Локальный контур</span>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Верхнеуровневые разделы">
+        <p class="nav-label">Черновой набор</p>
+        <button class="nav-item" type="button" data-route="obzor" aria-current="page">Обзор</button>
+        <button class="nav-item" type="button" data-route="configurator">Конфигуратор</button>
+        <button class="nav-item" type="button" data-route="network">Сеть</button>
+        <button class="nav-item" type="button" data-route="logs">Журналы</button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <p class="user-name">Инженер интегратора</p>
+        <p class="user-role">Integrator Engineer</p>
+        <p class="draft-note">Список разделов не утверждён. Постоянной шапки нет: статус находится в боковой панели.</p>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="content-head">
+        <div>
+          <h2 id="section-title">Обзор</h2>
+          <p class="route" id="section-route">/obzor</p>
+        </div>
+        <div class="state-switch" role="group" aria-label="Состояние области содержимого">
+          <button type="button" data-state="ready" aria-pressed="true">Готово</button>
+          <button type="button" data-state="loading" aria-pressed="false">Загрузка</button>
+          <button type="button" data-state="empty" aria-pressed="false">Пусто</button>
+          <button type="button" data-state="error" aria-pressed="false">Ошибка</button>
+          <button type="button" data-state="offline" aria-pressed="false">Нет связи</button>
+          <button type="button" data-state="denied" aria-pressed="false">Нет доступа</button>
+        </div>
+      </header>
+
+      <section class="content-body" id="content-body" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="dirty-dialog" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="dirty-title">
+      <h2 id="dirty-title">Несохранённые изменения</h2>
+      <p id="dirty-message">Есть несохранённые изменения. Переход возможен только после явного выбора.</p>
+      <p class="modal-error hidden" id="save-error">Сохранение не подтверждено. Введённые данные остаются несохранёнными.</p>
+      <div class="modal-actions">
+        <button type="button" class="primary" id="save-and-leave">Сохранить</button>
+        <button type="button" id="discard-and-leave">Не сохранять</button>
+        <button type="button" id="cancel-leave">Отмена</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="configurator.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

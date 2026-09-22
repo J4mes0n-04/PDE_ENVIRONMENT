@@ -130,7 +130,7 @@ Set-Location pde-environment
 
 **1. PDE → ASE: «можно реализовывать»**
 
-После Ready Review PDE кладёт в каталог Outcome файл по шаблону [`templates/ase-handoff.md`](templates/ase-handoff.md) и указывает неизменяемую ссылку на Pack (commit SHA), риск и автономию, срезы поставки, AC/NFR, ограничения и ожидания по evidence.
+После Ready Review PDE кладёт в каталог Outcome файл по шаблону [`templates/ase-handoff.md`](templates/ase-handoff.md): неизменяемая ссылка на Pack (commit SHA), риск и автономия, пользовательские сценарии, функциональные и нефункциональные требования, ограничения, срезы поставки и ожидания по evidence.
 
 ASE обязан **принять передачу (ACK)** или сразу вернуть конкретный список вопросов. Без ACK реализация по контракту ещё не начата. Детали — в [контракте PDE–ASE–QSRE](governance/19-ase-qsre-interface-contract.md).
 
