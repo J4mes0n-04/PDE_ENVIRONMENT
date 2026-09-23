@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AV Control · варианты глубины интерфейса</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg-canvas:#17181B; --bg-surface:#202226; --bg-raised:#2A2D32; --bg-sunken:#141518;
+  --border-subtle:#2A2D31; --border-default:#383B41; --border-strong:#4A4E56;
+  --text-value:#F2F3F5; --text-label:#8A8F98; --text-muted:#63676E;
+  --accent:#4F8FA6; --accent-hover:#5FA1B9;
+  --good:#4FA876;
+  --r-sm:2px; --r-md:4px; --r-lg:8px;
+  --sm:8px; --md:12px; --lg:16px; --xl:24px; --xxl:32px;
+  --sans:'IBM Plex Sans',ui-sans-serif,'Segoe UI',Arial,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box;}
+body{margin:0;background:var(--bg-canvas);color:var(--text-value);font-family:var(--sans);font-size:13px;line-height:1.45;-webkit-font-smoothing:antialiased;}
+
+.page-head{padding:var(--xl) var(--xl) var(--lg);max-width:1200px;margin:0 auto;border-bottom:1px solid var(--border-subtle);}
+.page-head h1{margin:0 0 var(--sm);font-size:22px;font-weight:700;}
+.page-head p{margin:0;max-width:62ch;color:var(--text-label);}
+.page-head a{color:var(--accent);}
+
+.toc{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:var(--sm);padding:var(--md) var(--xl);background:rgba(23,24,27,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border-subtle);}
+.toc a{font-size:12px;color:var(--text-label);text-decoration:none;padding:6px 10px;border:1px solid var(--border-default);border-radius:var(--r-md);background:var(--bg-surface);}
+.toc a:hover{color:var(--text-value);border-color:var(--border-strong);}
+
+.examples{max-width:1200px;margin:0 auto;padding:var(--xl);display:flex;flex-direction:column;gap:var(--xxl);}
+
+.example{border:1px solid var(--border-default);border-radius:var(--r-lg);overflow:hidden;background:var(--bg-surface);}
+.example-head{padding:var(--lg) var(--xl);border-bottom:1px solid var(--border-subtle);}
+.example-head .tag{display:inline-block;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#0E1A1F;background:var(--accent);padding:2px 8px;border-radius:var(--r-sm);margin-bottom:var(--sm);}
+.example-head h2{margin:0 0 var(--xs);font-size:18px;}
+.example-head .lead{margin:0;color:var(--text-label);max-width:70ch;font-size:12px;}
+.example-head .pick{margin:var(--md) 0 0;padding:var(--sm) var(--md);background:var(--bg-sunken);border-radius:var(--r-md);font-size:11px;color:var(--text-muted);border:1px dashed var(--border-subtle);}
+.example-head .pick strong{color:var(--text-label);}
+
+.stage{position:relative;min-height:380px;padding:var(--xl);display:flex;align-items:center;justify-content:center;}
+
+/* —— общий макет демо (мини boot) —— */
+.demo-wrap{width:100%;max-width:520px;display:flex;flex-direction:column;align-items:center;gap:var(--lg);}
+.demo-hero{text-align:center;width:100%;}
+.demo-hero h3{margin:0 0 var(--xs);font-size:16px;font-weight:500;}
+.demo-hero p{margin:0;font-size:12px;color:var(--text-label);}
+.demo-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--sm);width:100%;padding:var(--md);border-radius:var(--r-md);}
+.demo-metrics div{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.demo-metrics .k{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);}
+.demo-metrics .v{font-size:10px;font-family:var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.demo-card{width:280px;max-width:100%;padding:var(--lg);border-radius:var(--r-md);}
+.demo-card h4{margin:0 0 var(--md);font-size:13px;font-weight:500;text-align:center;}
+.demo-field{margin-bottom:var(--md);}
+.demo-field label{display:block;font-size:11px;color:var(--text-label);margin-bottom:var(--xs);}
+.demo-field input{width:100%;height:32px;padding:0 var(--md);border-radius:var(--r-sm);color:var(--text-value);font-size:12px;}
+.demo-actions{display:flex;flex-direction:column;align-items:center;gap:var(--xs);margin-top:var(--md);width:280px;max-width:100%;}
+.demo-actions .btn{height:36px;padding:0 var(--lg);border:none;border-radius:var(--r-sm);background:var(--accent);color:#0E1A1F;font-weight:500;font-size:12px;cursor:pointer;width:140px;}
+.demo-actions .hint{font-size:10px;color:var(--text-muted);text-align:center;max-width:26ch;line-height:1.35;}
+
+/* ========== 1. Atmospheric canvas ========== */
+.ex-1 .stage{
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(79,143,166,.12) 0%, transparent 55%),
+    radial-gradient(ellipse 100% 80% at 50% 100%, rgba(0,0,0,.45) 0%, transparent 50%),
+    linear-gradient(165deg, #1a1c20 0%, #121316 40%, #17181B 100%);
+}
+.ex-1 .stage::before{
+  content:"";position:absolute;inset:0;opacity:.035;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.ex-1 .demo-metrics{
+  background:var(--bg-surface);
+  border:1px solid var(--border-subtle);
+  box-shadow:0 4px 24px rgba(0,0,0,.35), 0 1px 0 rgba(255,255,255,.04) inset;
+}
+.ex-1 .demo-card{
+  background:var(--bg-raised);
+  border:1px solid var(--border-default);
+  box-shadow:
+    0 12px 40px rgba(0,0,0,.45),
+    0 2px 8px rgba(0,0,0,.25),
+    0 1px 0 rgba(255,255,255,.06) inset;
+}
+.ex-1 .demo-field input{background:var(--bg-sunken);border:1px solid var(--border-default);}
+
+/* ========== 2. Glass / frosted ========== */
+.ex-2 .stage{
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%232a3d4a'/%3E%3Cstop offset='50%25' stop-color='%2317181b'/%3E%3Cstop offset='100%25' stop-color='%231a2830'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g)' width='800' height='400'/%3E%3Ccircle cx='120' cy='80' r='140' fill='%234f8fa6' opacity='.25'/%3E%3Ccircle cx='680' cy='320' r='180' fill='%234fa876' opacity='.12'/%3E%3C/svg%3E") center/cover no-repeat;
+}
+.ex-2 .demo-metrics{
+  background:rgba(32,34,38,.55);
+  backdrop-filter:blur(16px) saturate(1.2);
+  -webkit-backdrop-filter:blur(16px) saturate(1.2);
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 8px 32px rgba(0,0,0,.3);
+}
+.ex-2 .demo-card{
+  background:rgba(42,45,50,.62);
+  backdrop-filter:blur(20px) saturate(1.15);
+  -webkit-backdrop-filter:blur(20px) saturate(1.15);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:
+    0 16px 48px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.08);
+}
+.ex-2 .demo-field input{
+  background:rgba(20,21,24,.65);
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(8px);
+}
+
+/* ========== 3. Elevation system ========== */
+.ex-3 .stage{background:var(--bg-canvas);}
+.ex-3 .elevation-legend{
+  position:absolute;top:var(--md);left:var(--md);font-size:10px;color:var(--text-muted);font-family:var(--mono);
+  display:flex;flex-direction:column;gap:4px;
+}
+.ex-3 .elevation-legend span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle;}
+.ex-3 .l0::before{background:var(--bg-canvas);border:1px solid var(--border-subtle);}
+.ex-3 .l1::before{background:var(--bg-surface);box-shadow:0 1px 2px rgba(0,0,0,.2);}
+.ex-3 .l2::before{background:var(--bg-raised);box-shadow:0 2px 8px rgba(0,0,0,.25);}
+.ex-3 .l3::before{background:var(--bg-raised);box-shadow:0 8px 24px rgba(0,0,0,.35);}
+.ex-3 .demo-metrics{
+  background:var(--bg-surface);
+  border:1px solid var(--border-subtle);
+  box-shadow:0 1px 2px rgba(0,0,0,.2), 0 0 0 1px rgba(0,0,0,.1);
+}
+.ex-3 .demo-card{
+  background:var(--bg-raised);
+  border:1px solid var(--border-default);
+  box-shadow:
+    0 1px 2px rgba(0,0,0,.2),
+    0 4px 12px rgba(0,0,0,.22),
+    0 12px 32px rgba(0,0,0,.18),
+    inset 0 1px 0 rgba(255,255,255,.05);
+}
+.ex-3 .demo-field input{
+  background:var(--bg-sunken);
+  border:1px solid var(--border-subtle);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.35);
+}
+.ex-3 .demo-actions .btn{
+  box-shadow:0 1px 0 rgba(255,255,255,.15) inset, 0 2px 8px rgba(0,0,0,.25);
+}
+
+/* ========== 4. Spotlight ========== */
+.ex-4 .stage{
+  background:var(--bg-canvas);
+  overflow:hidden;
+}
+.ex-4 .stage::after{
+  content:"";position:absolute;width:min(520px,90%);height:320px;left:50%;top:52%;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(ellipse 70% 65% at 50% 45%, rgba(79,143,166,.22) 0%, rgba(79,143,166,.06) 40%, transparent 70%);
+  pointer-events:none;z-index:0;
+}
+.ex-4 .demo-wrap{position:relative;z-index:1;}
+.ex-4 .demo-hero h3,.ex-4 .demo-hero p{opacity:.85;}
+.ex-4 .demo-metrics{
+  background:var(--bg-surface);
+  border:1px solid var(--border-subtle);
+  opacity:.92;
+}
+.ex-4 .demo-card{
+  background:linear-gradient(180deg, #26292e 0%, var(--bg-surface) 100%);
+  border:1px solid var(--border-strong);
+  box-shadow:0 0 0 1px rgba(79,143,166,.15), 0 20px 50px rgba(0,0,0,.4);
+}
+.ex-4 .demo-field input{background:var(--bg-sunken);border:1px solid var(--border-default);}
+
+/* ========== 5. Spatial rhythm (без тяжёлых эффектов) ========== */
+.ex-5 .stage{background:var(--bg-canvas);}
+.ex-5 .demo-wrap{gap:var(--xxl);max-width:480px;}
+.ex-5 .demo-hero h3{font-size:20px;font-weight:700;letter-spacing:-.02em;margin-bottom:var(--md);}
+.ex-5 .demo-hero p{font-size:13px;line-height:1.5;max-width:36ch;margin-inline:auto;}
+.ex-5 .demo-metrics{
+  background:transparent;
+  border:none;
+  padding:0;
+  gap:var(--lg);
+}
+.ex-5 .demo-metrics div{padding:0;}
+.ex-5 .demo-metrics .k{font-size:10px;margin-bottom:var(--xs);}
+.ex-5 .demo-metrics .v{font-size:12px;}
+.ex-5 .demo-card{
+  width:100%;max-width:320px;
+  background:var(--bg-surface);
+  border:1px solid var(--border-default);
+  box-shadow:none;
+  padding:var(--xl);
+}
+.ex-5 .demo-card h4{text-align:left;font-size:14px;margin-bottom:var(--lg);}
+.ex-5 .demo-field{margin-bottom:var(--lg);}
+.ex-5 .demo-field input{
+  height:36px;
+  background:var(--bg-sunken);
+  border:1px solid var(--border-subtle);
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.2);
+}
+.ex-5 .demo-actions{margin-top:var(--xl);align-items:stretch;width:100%;max-width:320px;}
+.ex-5 .demo-actions .btn{width:100%;height:40px;}
+
+/* ========== 6. Гибрид (1 + 3 + 4) ========== */
+.ex-6 .stage{
+  background:
+    radial-gradient(ellipse 90% 50% at 50% 20%, rgba(79,143,166,.1) 0%, transparent 50%),
+    linear-gradient(180deg, #1c1e22 0%, var(--bg-canvas) 100%);
+}
+.ex-6 .stage::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse 55% 45% at 50% 58%, rgba(255,255,255,.04) 0%, transparent 65%);
+  pointer-events:none;
+}
+.ex-6 .demo-wrap{position:relative;z-index:1;}
+.ex-6 .demo-metrics{
+  background:var(--bg-surface);
+  border:1px solid var(--border-subtle);
+  box-shadow:0 2px 12px rgba(0,0,0,.28);
+}
+.ex-6 .demo-card{
+  background:var(--bg-raised);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:
+    0 0 0 1px rgba(79,143,166,.12),
+    0 8px 28px rgba(0,0,0,.38),
+    inset 0 1px 0 rgba(255,255,255,.06);
+}
+.ex-6 .demo-field input{background:var(--bg-sunken);border:1px solid var(--border-default);box-shadow:inset 0 1px 2px rgba(0,0,0,.3);}
+
+.page-foot{max-width:1200px;margin:0 auto;padding:0 var(--xl) var(--xxl);color:var(--text-muted);font-size:12px;}
+.page-foot p{margin:0;}
+
+@media (max-width:640px){
+  .demo-metrics{grid-template-columns:repeat(2,1fr);}
+  .toc{padding:var(--sm) var(--md);}
+  .examples{padding:var(--md);}
+}
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <h1>Глубина интерфейса · AV Control</h1>
+  <p>Шесть вариантов на одном макете «первый запуск»: метрики, карточка формы, кнопка. Сравните и выберите номер — его можно перенести в <a href="index.html">index.html</a>.</p>
+</header>
+
+<nav class="toc" aria-label="Навигация по вариантам">
+  <a href="#ex-1">1 · Atmospheric</a>
+  <a href="#ex-2">2 · Glass</a>
+  <a href="#ex-3">3 · Elevation</a>
+  <a href="#ex-4">4 · Spotlight</a>
+  <a href="#ex-5">5 · Rhythm</a>
+  <a href="#ex-6">6 · Гибрид</a>
+</nav>
+
+<main class="examples">
+
+  <article class="example ex-1" id="ex-1">
+    <div class="example-head">
+      <span class="tag">Вариант 1</span>
+      <h2>Atmospheric canvas — фон как сцена, UI как острова</h2>
+      <p class="lead">Градиент, vignette и лёгкий noise на canvas; карточки светлее фона с мягкими ambient-тенями. Между блоками — воздух и контраст плоскостей.</p>
+      <p class="pick"><strong>Когда выбирать:</strong> нужен «продуктовый» dark dashboard, hero-экраны (#/start), без стекла и blur.</p>
+    </div>
+    <div class="stage">
+      <div class="demo-wrap">
+        <div class="demo-hero">
+          <h3>Настройка контроллера</h3>
+          <p>Создайте первого администратора</p>
+        </div>
+        <div class="demo-metrics" aria-hidden="true">
+          <div><span class="k">Контроллер</span><span class="v">AV-URAL-01</span></div>
+          <div><span class="k">Версия</span><span class="v">4.2.0</span></div>
+          <div><span class="k">Сеть</span><span class="v">192.168.1.10</span></div>
+          <div><span class="k">Порт</span><span class="v">443</span></div>
+        </div>
+        <div class="demo-card">
+          <h4>Создайте администратора</h4>
+          <div class="demo-field"><label>Логин</label><input type="text" value="admin.ural" readonly></div>
+          <div class="demo-field"><label>Пароль</label><input type="password" value="**********" readonly></div>
+        </div>
+        <div class="demo-actions">
+          <button type="button" class="btn">Создать систему</button>
+          <span class="hint">Демо: тени и атмосфера canvas</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="example ex-2" id="ex-2">
+    <div class="example-head">
+      <span class="tag">Вариант 2</span>
+      <h2>Glass / frosted — стекло над фоном</h2>
+      <p class="lead">Полупрозрачные панели с blur и светлой rim-обводкой; поля чуть плотнее (inset). Фон намеренно «живой», чтобы было видно слой между UI и canvas.</p>
+      <p class="pick"><strong>Когда выбирать:</strong> onboarding, wizard, первый запуск; допустим blur и fallback на opaque на слабых устройствах.</p>
+    </div>
+    <div class="stage">
+      <div class="demo-wrap">
+        <div class="demo-hero">
+          <h3>Настройка контроллера</h3>
+          <p>Создайте первого администратора</p>
+        </div>
+        <div class="demo-metrics" aria-hidden="true">
+          <div><span class="k">Контроллер</span><span class="v">AV-URAL-01</span></div>
+          <div><span class="k">Версия</span><span class="v">4.2.0</span></div>
+          <div><span class="k">Сеть</span><span class="v">192.168.1.10</span></div>
+          <div><span class="k">Порт</span><span class="v">443</span></div>
+        </div>
+        <div class="demo-card">
+          <h4>Создайте администратора</h4>
+          <div class="demo-field"><label>Логин</label><input type="text" value="admin.ural" readonly></div>
+          <div class="demo-field"><label>Пароль</label><input type="password" value="**********" readonly></div>
+        </div>
+        <div class="demo-actions">
+          <button type="button" class="btn">Создать систему</button>
+          <span class="hint">Демо: backdrop-filter + прозрачность</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="example ex-3" id="ex-3">
+    <div class="example-head">
+      <span class="tag">Вариант 3</span>
+      <h2>Elevation system — ступени высоты (L0–L3)</h2>
+      <p class="lead">Фиксированная шкала: canvas → surface → raised → акцентные объекты. Двойные тени (contact + ambient), inset у полей, лёгкий highlight у primary-кнопки.</p>
+      <p class="pick"><strong>Когда выбирать:</strong> масштабирование на весь продукт (dashboard, kits, logs) — предсказуемые токены `--elev-*`.</p>
+    </div>
+    <div class="stage">
+      <div class="elevation-legend" aria-hidden="true">
+        <span class="l0">L0 canvas</span>
+        <span class="l1">L1 surface</span>
+        <span class="l2">L2 raised</span>
+        <span class="l3">L3 focus card</span>
+      </div>
+      <div class="demo-wrap">
+        <div class="demo-hero">
+          <h3>Настройка контроллера</h3>
+          <p>Создайте первого администратора</p>
+        </div>
+        <div class="demo-metrics" aria-hidden="true">
+          <div><span class="k">Контроллер</span><span class="v">AV-URAL-01</span></div>
+          <div><span class="k">Версия</span><span class="v">4.2.0</span></div>
+          <div><span class="k">Сеть</span><span class="v">192.168.1.10</span></div>
+          <div><span class="k">Порт</span><span class="v">443</span></div>
+        </div>
+        <div class="demo-card">
+          <h4>Создайте администратора</h4>
+          <div class="demo-field"><label>Логин</label><input type="text" value="admin.ural" readonly></div>
+          <div class="demo-field"><label>Пароль</label><input type="password" value="**********" readonly></div>
+        </div>
+        <div class="demo-actions">
+          <button type="button" class="btn">Создать систему</button>
+          <span class="hint">Демо: многоуровневые box-shadow</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="example ex-4" id="ex-4">
+    <div class="example-head">
+      <span class="tag">Вариант 4</span>
+      <h2>Light pool / Spotlight — локальный свет вокруг фокуса</h2>
+      <p class="lead">Радиальный «прожектор» за формой; периферия canvas темнее. Карточка с акцентной обводкой и сильной тенью — центр внимания без шума на всей странице.</p>
+      <p class="pick"><strong>Когда выбирать:</strong> ACC-01, wizard, один главный блок на экране; accent в pool сдержанный.</p>
+    </div>
+    <div class="stage">
+      <div class="demo-wrap">
+        <div class="demo-hero">
+          <h3>Настройка контроллера</h3>
+          <p>Создайте первого администратора</p>
+        </div>
+        <div class="demo-metrics" aria-hidden="true">
+          <div><span class="k">Контроллер</span><span class="v">AV-URAL-01</span></div>
+          <div><span class="k">Версия</span><span class="v">4.2.0</span></div>
+          <div><span class="k">Сеть</span><span class="v">192.168.1.10</span></div>
+          <div><span class="k">Порт</span><span class="v">443</span></div>
+        </div>
+        <div class="demo-card">
+          <h4>Создайте администратора</h4>
+          <div class="demo-field"><label>Логин</label><input type="text" value="admin.ural" readonly></div>
+          <div class="demo-field"><label>Пароль</label><input type="password" value="**********" readonly></div>
+        </div>
+        <div class="demo-actions">
+          <button type="button" class="btn">Создать систему</button>
+          <span class="hint">Демо: radial-gradient pool</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="example ex-5" id="ex-5">
+    <div class="example-head">
+      <span class="tag">Вариант 5</span>
+      <h2>Spatial rhythm — глубина через типографику и воздух</h2>
+      <p class="lead">Минимум декора: крупный hero, широкие отступы, метрики без «коробки», inset только у полей. Muted-текст визуально дальше; кнопка на отдельном ритме.</p>
+      <p class="pick"><strong>Когда выбирать:</strong> инженерная админка, долгая работа в UI, слабые GPU, строгий корпоративный тон.</p>
+    </div>
+    <div class="stage">
+      <div class="demo-wrap">
+        <div class="demo-hero">
+          <h3>Настройка контроллера</h3>
+          <p>Создайте первого администратора. Далее — время, журналы и сеть.</p>
+        </div>
+        <div class="demo-metrics" aria-hidden="true">
+          <div><span class="k">Контроллер</span><span class="v">AV-URAL-01</span></div>
+          <div><span class="k">Версия</span><span class="v">4.2.0</span></div>
+          <div><span class="k">Сеть</span><span class="v">192.168.1.10</span></div>
+          <div><span class="k">Порт</span><span class="v">443</span></div>
+        </div>
+        <div class="demo-card">
+          <h4>Создайте администратора</h4>
+          <div class="demo-field"><label>Логин</label><input type="text" value="admin.ural" readonly></div>
+          <div class="demo-field"><label>Пароль</label><input type="password" value="**********" readonly></div>
+        </div>
+        <div class="demo-actions">
+          <button type="button" class="btn">Создать систему</button>
+          <span class="hint">Демо: отступы и типографическая лестница</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="example ex-6" id="ex-6">
+    <div class="example-head">
+      <span class="tag">Вариант 6 · гибрид</span>
+      <h2>Atmospheric + Elevation + Spotlight (рекомендуемый компромисс)</h2>
+      <p class="lead">Мягкий градиент canvas, лёгкий pool за формой, карточка на уровне L3 с accent ring и inset highlight. Без blur — дружелюбно к панелям и проще перенести в прототип.</p>
+      <p class="pick"><strong>Когда выбирать:</strong> #/start и wizard с «глубиной», остальные экраны — только elevation (вариант 3).</p>
+    </div>
+    <div class="stage">
+      <div class="demo-wrap">
+        <div class="demo-hero">
+          <h3>Настройка контроллера</h3>
+          <p>Создайте первого администратора</p>
+        </div>
+        <div class="demo-metrics" aria-hidden="true">
+          <div><span class="k">Контроллер</span><span class="v">AV-URAL-01</span></div>
+          <div><span class="k">Версия</span><span class="v">4.2.0</span></div>
+          <div><span class="k">Сеть</span><span class="v">192.168.1.10</span></div>
+          <div><span class="k">Порт</span><span class="v">443</span></div>
+        </div>
+        <div class="demo-card">
+          <h4>Создайте администратора</h4>
+          <div class="demo-field"><label>Логин</label><input type="text" value="admin.ural" readonly></div>
+          <div class="demo-field"><label>Пароль</label><input type="password" value="**********" readonly></div>
+        </div>
+        <div class="demo-actions">
+          <button type="button" class="btn">Создать систему</button>
+          <span class="hint">Демо: комбинация 1 + 3 + 4</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+</main>
+
+<footer class="page-foot">
+  <p>Откройте файл локально: <code>Working/av-control-prototype/ui-depth-showcase.html</code>. Напишите номер варианта (1–6) — перенесём токены и стили в основной прототип.</p>
+</footer>
+
+</body>
+</html>
